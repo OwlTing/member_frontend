@@ -1,137 +1,150 @@
 <template>
-    <b-container>
-        <b-card>
-            <b-card-title class="clearfix">
+    <BContainer>
+        <BCard>
+            <BCardTitle class="clearfix">
                 <NuxtLink :to="{ name: 'profile-show'}">
-                    <fa icon="arrow-left" class="mr-3" />
+                    <Icon name="ph:arrow-left" width="25" height="25" class="me-3"/>
                 </NuxtLink>
                 <span>{{ $t('profile.title.password') }}</span>
-            </b-card-title>
+            </BCardTitle>
 
-            <b-row>
-                <b-col md="6" sm="10" xs="12">
+            <BRow>
+                <BCol md="6" sm="10" xs="12">
                     <div class="mt-5">
-                        <b-form @submit="onSubmit" @submit.stop.prevent>
+                        <BForm @submit="onSubmit" @submit.stop.prevent>
 
-                            <b-form-group :label="$t('profile.oldPassword')" class="mt-5" required style="position:relative" >
+                            <BFormGroup :label="$t('profile.oldPassword')" class="mt-5" required style="position:relative" >
                                 <div style="position:absolute; top:-30px; right:0; cursor:pointer" class="text-secondary small" @click="passwordForgetModalShow">{{ $t('profile.passwordForget') }}</div>
-                                <b-form-input type="password" v-model="form.oldPassword" autofocus required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('oldPassword')) }"></b-form-input>
-                                <b-form-invalid-feedback v-if="formerrs['oldPassword']">
+                                <BFormInput type="password" v-model="form.oldPassword" autofocus required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('oldPassword')) }"></BFormInput>
+                                <BFormInvalidFeedback v-if="formerrs['oldPassword']">
                                     {{ formerrs['oldPassword'].join(', ') }}
-                                </b-form-invalid-feedback>
-                            </b-form-group>
+                                </BFormInvalidFeedback>
+                            </BFormGroup>
 
-                            <b-form-group :label="$t('profile.newPassword')" class="mt-5" required>
-                                <b-form-input type="password" v-model="form.newPassword1" required :placeholder="$t('profile.newPassword1Placeholder')" autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('newPassword1')) }"></b-form-input>
-                                <b-form-invalid-feedback v-if="formerrs['newPassword1']">
+                            <BFormGroup :label="$t('profile.newPassword')" class="mt-5" required>
+                                <BFormInput type="password" v-model="form.newPassword1" required :placeholder="$t('profile.newPassword1Placeholder')" autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('newPassword1')) }"></BFormInput>
+                                <BFormInvalidFeedback v-if="formerrs['newPassword1']">
                                     {{ formerrs['newPassword1'].join(', ') }}
-                                </b-form-invalid-feedback>
-                            </b-form-group>
+                                </BFormInvalidFeedback>
+                            </BFormGroup>
 
-                            <b-form-group required>
-                                <b-form-input type="password" v-model="form.newPassword2" required :placeholder="$t('profile.newPassword2Placeholder')" autocomplete="off" class="mt-3" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('newPassword2')) }"></b-form-input>
-                                <b-form-invalid-feedback v-if="formerrs['newPassword2']">
+                            <BFormGroup required>
+                                <BFormInput type="password" v-model="form.newPassword2" required :placeholder="$t('profile.newPassword2Placeholder')" autocomplete="off" class="mt-3" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('newPassword2')) }"></BFormInput>
+                                <BFormInvalidFeedback v-if="formerrs['newPassword2']">
                                     {{ formerrs['newPassword2'].join(', ') }}
-                                </b-form-invalid-feedback>
-                            </b-form-group>
+                                </BFormInvalidFeedback>
+                            </BFormGroup>
 
-                            <b-form-group class="mt-5">
-                                <b-button type="submit" variant="primary" :disabled="(form.loading)">{{ $t('profile.title.password') }}</b-button>
-                            </b-form-group>
-                        </b-form>
+                            <BFormGroup class="mt-5">
+                                <BButton type="submit" variant="primary" :disabled="(form.loading)">{{ $t('profile.title.password') }}</BButton>
+                            </BFormGroup>
+                        </BForm>
                     </div>
-                </b-col>
-            </b-row>
-        </b-card>
-    </b-container>
+                </BCol>
+            </BRow>
+        </BCard>
+
+        <BModal v-model="modal.passwordChanged" :title="$t('profile.title.password')" size="xs" :centered="true" :cancelDisabled="true" :hideFooter="true" :noCloseOnBackdrop="true" :hideHeaderClose="true">
+            <p class="my-2">{{ $t('profile.passwordChanged') }}</p>
+
+            <div class="mt-4 text-end">
+                <BButton variant="primary" :to="{name: 'profile-show'}">{{ $t('m.ok') }}</BButton>
+            </div>
+        </BModal>
+
+        <BModal v-model="modal.passwordForget" :title="$t('profile.passwordForget')" size="xs" :centered="true" :cancelDisabled="true" :hideFooter="true" :noCloseOnBackdrop="true" :hideHeaderClose="true">
+            <p class="my-2">{{ $t('profile.passwordForgetHint', {email : AuthStore.profile.email}) }}</p>
+
+            <div class="mt-4 text-end">
+                <BButton variant="primary" :to="{name: 'profile-show'}">{{ $t('m.ok') }}</BButton>
+            </div>
+        </BModal>
+
+        <BModal v-model="modal.passwordForgetError" :title="$t('profile.passwordForget')" size="xs" :centered="true" :cancelDisabled="true" :hideFooter="true" :noCloseOnBackdrop="true" :hideHeaderClose="true">
+            <p class="my-2">{{ $t('profile.passwordForgetError') }}</p>
+
+            <div class="mt-4 text-end">
+                <BButton variant="primary" :to="{name: 'profile-show'}">{{ $t('m.ok') }}</BButton>
+            </div>
+        </BModal>
+    </BContainer>
 </template>
-<script>
 
-import api from '~/api/api.js';
+<script setup>
 
-export default {
-    layout:'main',
-    head() {
-        return {
-            title: this.$t('profile.title.edit')
+    let modal = reactive({
+        passwordChanged: false,
+        passwordForget: false,
+        passwordForgetError: false,
+    })
+
+    const AuthStore = useAuthStore();
+
+    const router = useRouter();
+
+    import api from '~/api/api.js';
+
+    definePageMeta({
+        layout: "main",
+        middleware: 'auth'
+    })
+
+    const { t } = useI18n()
+
+    const { $event } = useNuxtApp();
+
+    $event('breadcrumb:updated', [{
+        text: t('profile.title.show'),
+        to : router.resolve({name:'profile-show'}).path
+    }, {
+        text: t('profile.title.password'),
+    }]);
+
+    useHead({
+        title: t('profile.title.password')
+    })
+
+
+    let form = reactive({
+
+        loading : false,
+
+        oldPassword : '',
+        newPassword1 : '',
+        newPassword2 : '',
+    });
+
+    let formerrs = reactive([]);
+
+
+    async function onSubmit() {
+        form.loading = true;
+
+        let ret = await api.profile.password(form.oldPassword, form.newPassword1, form.newPassword2);
+
+        if ( !ret.status ) {
+            form.loading = false;
+            formerrs = ret.error;
+
+            return;
         }
-    },
 
-    created() {
-
-        this.$nuxt.$emit('breadcrumbLoading', [ {
-            text: this.$t('profile.title.show'),
-            to : {name : 'profile-show'}
-        }, {
-            text: this.$t('profile.title.password'),
-        }]);
-    },
-
-    computed: {},
-
-    data() {
-        return {
-
-            form: {
-
-                loading : false,
-
-                oldPassword : '',
-                newPassword1 : '',
-                newPassword2 : '',
-            },
-
-            formerrs: []
-        }
-    },
-
-    methods: {
-
-        async passwordForgetModalShow(){
-
-            try {
-
-                let ret = await api.auth.passwordForget();
-
-                this.$bvModal.msgBoxOk(this.$t('profile.passwordForgetHint', {email : this.me.email}), {
-                    title: this.$t('profile.passwordForget'),
-                    okTitle: this.$t('m.ok'),
-                    centered: true
-                }).then(value => {
-                    this.$router.push({ name: 'profile-show' });
-                });
-
-            } catch (error) {
-
-                this.$bvModal.msgBoxOk(this.$t('profile.passwordForgetError'), {
-                    title: this.$t('profile.passwordForget'),
-                    okTitle: this.$t('m.ok'),
-                    centered: true
-                });
-            }
-        },
-
-        async onSubmit(e) {
-            this.form.loading = true;
-
-            let ret = await api.auth.password(this.form.oldPassword, this.form.newPassword1, this.form.newPassword2);
-
-            if ( !ret.status ) {
-                this.form.loading = false;
-                this.formerrs = ret.error;
-
-                return;
-            }
-
-            this.$bvModal.msgBoxOk(this.$t('profile.passwordChanged'), {
-                title: this.$t('profile.title.password'),
-                size: 'sm',
-                okTitle: this.$t('m.ok'),
-                centered: true
-            }).then(value => {
-                this.$router.push({ name: 'profile-show' });
-            });
-        },
+        modal.passwordChanged = true;
     }
-};
+
+   async function passwordForgetModalShow(){
+
+        try {
+
+            let ret = await api.profile.passwordForget();
+
+            if ( ret.status ) {
+                modal.passwordForget = true;
+            }
+
+        } catch (error) {
+
+            modal.passwordForgetError = true;
+        }
+    }
 </script>

@@ -1,15 +1,14 @@
 <template>
-    <b-container>
-        <b-card>
-            <b-card-title class="clearfix">
+    <BContainer>
+        <BCard>
+            <BCardTitle class="clearfix">
                 <NuxtLink :to="{ name: 'profile-show'}">
-                    <fa icon="arrow-left" class="mr-3" />
+                    <Icon name="ph:arrow-left" width="25" height="25" class="me-3"/>
                 </NuxtLink>
                 <span>{{ $t('profile.title.edit') }}</span>
-            </b-card-title>
-
-            <b-row>
-                <b-col md="7" sm="10" xs="12">
+            </BCardTitle>
+            <BRow>
+                <BCol md="7" sm="10" xs="12">
                     <div class="clearfix">
 
                         <div class="mb-2">
@@ -21,11 +20,11 @@
                                 <div class="overlay"></div>
                                 <div class="cropperBox">
                                     <div class="cropper">
-                                        <cropper ref="cropper" class="upload-cropper" :src="image.src" :canvas="{height: 400, width: 400}" :stencil-props="{aspectRatio: 1/1}"/>
+                                        <cropper ref="cropperBox" class="upload-cropper" :src="image.src" :canvas="{height: 400, width: 400}" :stencil-props="{aspectRatio: 1/1}"/>
                                     </div>
                                     <div class="toolBox bg-white text-center">
-                                        <div class="btn btn-primary w-50" @click="handleUploading()"><fa icon="upload" /> {{ $t('m.upload') }}</div>
-                                        <div class="btn btn-light w-50" @click="uploadCancel()"><fa icon="xmark" /> {{ $t('m.cancel') }}</div>
+                                        <div class="btn btn-primary w-50" @click="handleUploading()"><Icon name="fa:upload" color="#fff" class="me-1" /> {{ $t('m.upload') }}</div>
+                                        <div class="btn btn-light w-50" @click="uploadCancel()"><Icon name="fa6-solid:xmark" class="me-1"/> {{ $t('m.cancel') }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -33,11 +32,11 @@
                             <div style="position:relative; width:200px; border-radius:6px; outline:1px solid #ccc; overflow:hidden; user-select:none;">
                                 <div v-show="form.uploading" style="position:absolute; top:0; bottom:0; right:0; left:0; z-index:5; background:rgba(0,0,0,.5); color:#fff">
                                     <div style="position:absolute; inset:0 0 0 0; margin:auto; margin-top:80px; width:40px; height:40px; line-height:40px;">
-                                        <fa icon="spinner" style="font-size:40px"/>
+                                        <Icon name="fa:spinner" width="40" height="40"/>
                                     </div>
                                 </div>
 
-                                <b-avatar square :src="form.avatar" size="200px"></b-avatar>
+                                <BAvatar square :src="form.avatar" size="200px" />
 
                                 <template v-if="form.avatar == avatar">
                                     <div style="text-align:center; padding:8px 16px; position:relative">
@@ -56,233 +55,230 @@
                     </div>
 
                     <div class="mt-5">
-                        <b-form @submit="onSubmit" @submit.stop.prevent>
-                            <b-form-group :label="$t('profile.email')" style="margin-top:40px">
-                                <b-form-input :value="email" disabled></b-form-input>
-                            </b-form-group>
+                        <BForm @submit="onSubmit" @submit.stop.prevent>
+                            <BFormGroup :label="$t('profile.email')" style="margin-top:40px">
+                                <BFormInput v-model="form.email" disabled></BFormInput>
+                            </BFormGroup>
 
-                            <b-form-group :label="$t('profile.name')" style="margin-top:40px" required>
-                                <b-form-input v-model="form.name" autofocus required></b-form-input>
-                            </b-form-group>
+                            <BFormGroup :label="$t('profile.name')" style="margin-top:40px" required>
+                                <BFormInput v-model="form.name" autofocus required></BFormInput>
+                            </BFormGroup>
 
-                            <b-form-group :label="$t('profile.birthday')" style="margin-top:40px" required>
+                            <BFormGroup :label="$t('profile.birthday')" style="margin-top:40px" required>
 
                                 <client-only>
-                                    <date-picker placeholder="YYYY-MM-DD" format="yyyy-MM-dd" v-model="form.birthday" input-class="form-control" :typeable="true" :required="true" :bootstrap-styling="true" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('birthday')) }" required />
+                                    <date-picker placeholder="YYYY-MM-DD" format="yyyy-MM-dd" v-model="form.birthday" input-class="form-control" :typeable="true" :enable-time-picker="false" :required="true" :bootstrap-styling="true" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('birthday')) }" auto-apply :clearable="false" required />
                                 </client-only>
 
-                                <b-form-invalid-feedback v-if="formerrs.hasOwnProperty('birthday')">
+                                <BFormInvalidFeedback v-if="formerrs.hasOwnProperty('birthday')">
                                     {{ formerrs.birthday.join(', ') }}
-                                </b-form-invalid-feedback>
-                            </b-form-group>
+                                </BFormInvalidFeedback>
+                            </BFormGroup>
 
-                            <b-form-group :label="$t('profile.gender')" style="margin-top:40px" required>
-                                <b-form-radio-group v-model="form.gender" :options=" [
+                            <BFormGroup :label="$t('profile.gender')" style="margin-top:40px" required>
+                                <BFormRadioGroup v-model="form.gender" :options=" [
                                     { text: $t('profile.genderHint.male'),      value: 'male'       },
                                     { text: $t('profile.genderHint.female'),    value: 'female'     },
                                     { text: $t('profile.genderHint.unknown'),   value: 'unknown'    }
-                                ]" inline required></b-form-radio-group>
-                            </b-form-group>
+                                ]" inline required></BFormRadioGroup>
+                            </BFormGroup>
 
-                            <b-form-group style="margin-top:40px">
-                                <b-button type="submit" variant="primary" :disabled="(form.loading)">{{ $t('m.save') }}</b-button>
-                            </b-form-group>
-                        </b-form>
+                            <BFormGroup style="margin-top:40px">
+                                <BButton type="submit" variant="primary" :disabled="(form.loading)">{{ $t('m.save') }}</BButton>
+                            </BFormGroup>
+                        </BForm>
                     </div>
-                </b-col>
-            </b-row>
-        </b-card>
+                </BCol>
+            </BRow>
+        </BCard>
 
-    </b-container>
+    </BContainer>
 </template>
 
-<script>
+<script setup>
 
-import api from '~/api/api.js';
+    const router    = useRouter();
+    const cfg       = useRuntimeConfig();
 
-function getMimeType(file, fallback = null) {
-	const byteArray = (new Uint8Array(file)).subarray(0, 4);
-    let header = '';
-    for (let i = 0; i < byteArray.length; i++) {
-       header += byteArray[i].toString(16);
+    import api from '~/api/api.js';
+
+    definePageMeta({
+        layout: "main",
+        middleware: 'auth'
+    })
+    
+    const dayjs = useDayjs();
+
+    const { t } = useI18n()
+
+    const { $event } = useNuxtApp();
+
+    $event('breadcrumb:updated', [{
+        text: t('profile.title.show'),
+        to : router.resolve({name:'profile-show'}).path
+    }, {
+        text: t('m.edit'),
+    }]);
+
+    useHead({
+        title: t('profile.title.edit')
+    })
+
+    const AuthStore = useAuthStore();
+    
+    const cropperBox = ref();
+
+    let uploadBox   = ref(null);
+
+    let email       = ref(AuthStore.profile.email);
+    let avatar      = ref(cfg.public.ssoAvatar);
+
+    let image = reactive({
+        src: null,
+        type: null
+    });
+
+    let form = reactive({
+        loading     : false,
+        uploading   : false,
+        trigger     : false,
+
+        option      : {
+            request : null,
+            output  : null,
+            mimes   : 'image/png, image/jpeg, image/bmp',
+        },
+
+        email       : AuthStore.profile.email,
+        avatar      : AuthStore.profile.avatar,
+        name        : AuthStore.profile.name,
+        birthday    : AuthStore.profile.birthday,
+        gender      : AuthStore.profile.gender,
+    });
+
+    let formerrs = reactive({});
+
+    function avatarDestory() {
+        form.avatar = avatar.value;
     }
-	switch (header) {
-        case "89504e47":
-            return "image/png";
-        case "47494638":
-            return "image/gif";
-        case "ffd8ffe0":
-        case "ffd8ffe1":
-        case "ffd8ffe2":
-        case "ffd8ffe3":
-        case "ffd8ffe8":
-            return "image/jpeg";
-        default:
-            return fallback;
-    }
-}
 
-export default {
+	function loadImage(event) {
 
-    layout: 'main',
+        const { files } = event.target;
 
-    data() {
-        return {
+        if (files && files[0]) {
 
-            uploadBox: false,
+            form.trigger = true;
 
-            email : '',
-
-			image: {
-				src: null,
-				type: null
-			},
-
-            form: {
-                loading     : false,
-                uploading   : false,
-                trigger     : false,
-
-                option      : {
-                    request : null,
-                    output  : null,
-                    mimes   : 'image/png, image/jpeg, image/bmp',
-                },
-
-                avatar      : null,
-                name        : null,
-                birthday    : null,
-                gender      : 'unknown',
-            },
-
-            formerrs: {},
-
-            avatar : process.env.SSO_AVATAR
-        }
-    },
-
-    computed: {
-        profile () {
-            return this.$store.state.user.profile;
-        }
-    },
-
-    created() {
-
-        this.$nuxt.$emit('breadcrumbLoading', [ {
-            text: this.$t('profile.title.show'),
-            to : {name : 'profile-show'}
-        }, {
-            text: this.$t('m.edit'),
-        }]);
-
-        this.form.name          = this.profile.name;
-        this.email              = this.profile.email;
-        this.form.birthday      = this.profile.birthday;
-        this.form.avatar        = this.profile.avatar;
-        this.form.gender        = this.profile.gender;
-    },
-
-
-
-    methods: {
-
-        async onSubmit(e) {
-
-            this.form.loading = true;
-
-            let ret = await api.auth.update({
-                name     : this.form.name,
-                birthday : this.$dayjs(this.form.birthday).format('YYYY-MM-DD'),
-                gender   : this.form.gender,
-                avatar   : this.form.avatar
-            });
-
-            if ( !ret.status ) {
-                this.form.loading = false;
-                this.$set(this, 'formerrs', ret.error);
-
-                return;
+            if (image.src) {
+                URL.revokeObjectURL(image.src)
             }
 
-            this.$store.dispatch('user/profile', ret.data.user);
+            const blob   = URL.createObjectURL(files[0]);
+            const reader = new FileReader();
 
-            this.$router.push({ name: 'profile-show' });
-        },
+            reader.onload = (e) => {
 
-        avatarDestory() {
-            this.form.avatar = this.avatar;
-        },
+                uploadBox.value = true;
+                image = {
+                    src: blob,
+                    type: getMimeType(e.target.result, files[0].type),
+                };
+            };
 
-        uploadCancel () {
-            this.destroyed();
-            this.reset();
-            this.uploadBox = false;
-        },
-
-		handleUploading() {
-			const { canvas } = this.$refs.cropper.getResult();
-			if (!canvas) return;
-
-            this.uploadBox = false;
-            this.form.uploading = true;
-
-            const frm = new FormData();
-
-			canvas.toBlob( async (blob) => {
-
-                frm.append('file', blob);
-
-                const ret = await api.auth.avatar(frm);
-
-                this.form.avatar = ret.data.path;
-
-                this.form.uploading = false;
-
-			}, this.image.type);
-		},
-
-		reset() {
-			this.image = {src: null, type: null};
-		},
-
-		loadImage(event) {
-
-			const { files } = event.target;
-
-			if (files && files[0]) {
-
-                this.form.trigger = true;
-
-				if (this.image.src) {
-					URL.revokeObjectURL(this.image.src)
-				}
-
-				const blob = URL.createObjectURL(files[0]);
-				const reader = new FileReader();
-
-				reader.onload = (e) => {
-
-                    this.uploadBox = true;
-					this.image = {
-						src: blob,
-						type: getMimeType(e.target.result, files[0].type),
-					};
-				};
-
-				reader.readAsArrayBuffer(files[0]);
-			}
-		},
-
-        destroyed() {
-
-            if (this.image.src) {
-                URL.revokeObjectURL(this.image.src)
-            }
+            reader.readAsArrayBuffer(files[0]);
         }
-    },
+    }
 
-}
+
+	function handleUploading() {
+
+        if (!cropperBox.value) return;
+
+        const { canvas } = cropperBox.value.getResult();
+
+        uploadBox.value = false;
+        form.uploading = true;
+
+        const frm = new FormData();
+
+        canvas.toBlob( async (blob) => {
+
+            frm.append('file', blob);
+
+            const ret = await api.profile.avatar(frm);
+
+            form.avatar = ret.data.path;
+
+            form.uploading = false;
+
+        }, image.type);
+    }
+
+
+    function uploadCancel () {
+        destroyed();
+        reset();
+        uploadBox.value = false;
+    }
+
+    function reset() {
+        image = {src: null, type: null};
+    }
+
+    function destroyed() {
+
+        if (image.src) {
+            URL.revokeObjectURL(image.src)
+        }
+    }
+
+    function getMimeType(file, fallback = null) {
+        const byteArray = (new Uint8Array(file)).subarray(0, 4);
+        let header = '';
+        for (let i = 0; i < byteArray.length; i++) {
+           header += byteArray[i].toString(16);
+        }
+        switch (header) {
+            case "89504e47":
+                return "image/png";
+            case "47494638":
+                return "image/gif";
+            case "ffd8ffe0":
+            case "ffd8ffe1":
+            case "ffd8ffe2":
+            case "ffd8ffe3":
+            case "ffd8ffe8":
+                return "image/jpeg";
+            default:
+                return fallback;
+        }
+    }
+
+    async function onSubmit(e) {
+
+        form.loading = true;
+
+        let ret = await api.profile.update({
+            name     : form.name,
+            birthday : dayjs(form.birthday).format('YYYY-MM-DD'),
+            gender   : form.gender,
+            avatar   : form.avatar
+        });
+
+        if ( !ret.status ) {
+            form.loading = false;
+            formerrs = ret.error;
+
+            return;
+        }
+
+        form.loading = true;
+
+        AuthStore.update(ret.data.user);
+
+        await navigateTo({ name: 'profile-show' });
+    }
 
 </script>
 

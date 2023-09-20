@@ -64,8 +64,8 @@ export default {
     passwordChanged: 'パスワードが変更されました。次回ログイン時には、新しいパスワードを使用してください',
     oldPasswordNotMatch: '元のパスワードが一致しません',
 
-    passwordForgetError: '密碼重設已發送到您的信箱，如未能找到請稍後再點擊 [忘記密碼]',
-    passwordForgetHint : '密碼重設信已發送到您的信箱 ({email})，請依說明進行密碼重設，如找不到重設信，請查看「垃圾信件」，或於信箱程式內搜尋「OwlTing」。',
+    passwordForgetError: 'パスワード再設定用のURLを送信いたします，見つからない場合は、しばらくしてから再度クリックしてください。',
+    passwordForgetHint : 'パスワード再設定用のURLを送信いたします ({email})。再設定メールが届かない場合、メールボックスにて「OwlTing」を検索するか、迷惑メールフォルダをご確認ください。',
 
     countryCode : '国コード',
 

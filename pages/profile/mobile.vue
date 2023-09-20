@@ -1,290 +1,270 @@
 <template>
-    <b-container>
+    <BContainer>
         <transition name="fade" mode="out-in">
-            <b-card v-if="step.password">
-                <b-card-title class="clearfix">
+            <BCard v-if="step.password">
+                <BCardTitle class="clearfix">
                     <NuxtLink :to="{ name: 'profile-show'}">
-                        <fa icon="arrow-left" class="mr-3" />
+                        <Icon name="ph:arrow-left" width="25" height="25" class="me-3"/>
                     </NuxtLink>
                     <span>{{ $t('profile.title.passwordConfirm') }}</span>
-                </b-card-title>
+                </BCardTitle>
 
-                <b-row>
-                    <b-col md="7" sm="10" xs="12">
+                <BRow>
+                    <BCol md="7" sm="10" xs="12">
                         <div class="mt-2">
                             <div v-if="mobile.number">
                                 ({{ mobile.code }}) {{ mobile.number }}
-                                <fa icon="circle-check" style="margin-left:10px; color:#a9d341" />
+                                <Icon name="fa6-solid:circle-check" style="margin-left:10px; color:#a9d341" />
                                 <span style="color:#a3abb2">{{ $t('profile.mobileValidate') }}</span>
                             </div>
                             <div class="mt-3">{{ $t('profile.mobileBindHint') }}</div>
                             <div class="mt-3">
-                                <b-form @submit="onPasswordSubmit" @submit.stop.prevent>
-                                    <b-form-group :label="$t('profile.password')" required>
-                                        <b-form-input type="password" v-model="form.password" autofocus required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('password')) }"></b-form-input>
-                                        <b-form-invalid-feedback v-if="formerrs['password']">
+                                <BForm @submit="onPasswordSubmit" @submit.stop.prevent>
+                                    <BFormGroup :label="$t('profile.password')" required>
+                                        <BFormInput type="password" v-model="form.password" autofocus required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('password')) }"></BFormInput>
+                                        <BFormInvalidFeedback v-if="formerrs['password']">
                                             {{ formerrs['password'].join(', ') }}
-                                        </b-form-invalid-feedback>
-                                    </b-form-group>
+                                        </BFormInvalidFeedback>
+                                    </BFormGroup>
 
-                                    <b-form-group class="mt-5">
-                                        <b-button type="submit" variant="primary" :disabled="(form.loading)">{{ $t('m.reset') }}</b-button>
-                                    </b-form-group>
-                                </b-form>
+                                    <BFormGroup class="mt-5">
+                                        <BButton type="submit" variant="primary" :disabled="(form.loading)">{{ $t('m.reset') }}</BButton>
+                                    </BFormGroup>
+                                </BForm>
                             </div>
                         </div>
-                    </b-col>
-                </b-row>
-            </b-card>
+                    </BCol>
+                </BRow>
+            </BCard>
 
-            <b-card v-else>
-                <b-card-title class="clearfix">
+            <BCard v-else>
+                <BCardTitle class="clearfix">
                     <NuxtLink :to="{ name: 'profile-show'}">
-                        <fa icon="arrow-left" class="mr-3" />
+                        <Icon name="ph:arrow-left" width="25" height="25" class="me-3"/>
                     </NuxtLink>
                     <span>{{ $t('profile.title.mobile') }}</span>
-                </b-card-title>
+                </BCardTitle>
 
-                <b-row>
-                    <b-col md="7" sm="10" xs="12">
+                <BRow>
+                    <BCol md="7" sm="10" xs="12">
                         <div class="mt-5">
-                            <b-form @submit="onMobileSubmit" @submit.stop.prevent>
-                                <b-row>
-                                    <b-col cols="4">
-                                        <b-form-group :label="$t('profile.countryCode')" required>
-                                            <b-form-input v-model="form.countryCode" autofocus required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('countryCode')) }" placeholder='+886' @blur="onBlur"></b-form-input>
-                                            <b-form-invalid-feedback v-if="formerrs['countryCode']">
+                            <BForm @submit="onMobileSubmit" @submit.stop.prevent>
+                                <BRow>
+                                    <BCol cols="4">
+                                        <BFormGroup :label="$t('profile.countryCode')" required>
+                                            <BFormInput v-model="form.mobile.code" autofocus required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('countryCode')) }" placeholder='+886' @blur="onBlur"></BFormInput>
+                                            <BFormInvalidFeedback v-if="formerrs['countryCode']">
                                                 {{ formerrs['countryCode'].join(', ') }}
-                                            </b-form-invalid-feedback>
-                                        </b-form-group>
-                                    </b-col>
-                                    <b-col>
-                                        <b-form-group :label="$t('profile.mobile')" required>
-                                            <b-form-input v-model="form.mobile" required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('mobile')) }"></b-form-input>
-                                            <b-form-invalid-feedback v-if="formerrs['mobile']">
+                                            </BFormInvalidFeedback>
+                                        </BFormGroup>
+                                    </BCol>
+                                    <BCol>
+                                        <BFormGroup :label="$t('profile.mobile')" required>
+                                            <BFormInput v-model="form.mobile.number" required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('mobile')) }"></BFormInput>
+                                            <BFormInvalidFeedback v-if="formerrs['mobile']">
                                                 {{ formerrs['mobile'].join(', ') }}
-                                            </b-form-invalid-feedback>
-                                        </b-form-group>
-                                    </b-col>
-                                </b-row>
+                                            </BFormInvalidFeedback>
+                                        </BFormGroup>
+                                    </BCol>
+                                </BRow>
 
-                                <b-row class="mt-5">
-                                    <b-col cols="6">
-                                        <b-form-group :label="$t('profile.verificationCode')" required>
-                                            <b-form-input v-model="form.verificationCode" required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('verificationCode')) }"></b-form-input>
-                                            <b-form-invalid-feedback v-if="formerrs['verificationCode']">
+                                <BRow class="mt-5">
+                                    <BCol cols="6">
+                                        <BFormGroup :label="$t('profile.verificationCode')" required>
+                                            <BFormInput v-model="form.verificationCode" required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('verificationCode')) }"></BFormInput>
+                                            <BFormInvalidFeedback v-if="formerrs['verificationCode']">
                                                 {{ formerrs['verificationCode'].join(', ') }}
-                                            </b-form-invalid-feedback>
-                                        </b-form-group>
-                                    </b-col>
-                                    <b-col>
-                                        <b-form-group>
+                                            </BFormInvalidFeedback>
+                                        </BFormGroup>
+                                    </BCol>
+                                    <BCol>
+                                        <BFormGroup>
                                             <div style="height:40px"></div>
-                                            <b-button variant="success" :disabled="(form.verification)" class="btn-block" @click="onVerification">
+                                            <BButton variant="success" :disabled="(form.verification)" class="btn-block" @click="onVerification">
                                                 <template v-if="!form.verification">{{ $t('profile.verificationCodeGet') }}</template>
                                                 <template v-else>{{ $t('profile.verificationCountDown', {time: verification.counter}) }}</template>
-                                            </b-button>
-                                        </b-form-group>
-                                    </b-col>
-                                </b-row>
+                                            </BButton>
+                                        </BFormGroup>
+                                    </BCol>
+                                </BRow>
 
-                                <b-form-group class="mt-5">
-                                    <b-button type="submit" variant="primary" :disabled="(form.loading)">{{ $t('m.save') }}</b-button>
-                                </b-form-group>
-                            </b-form>
+                                <BFormGroup class="mt-5">
+                                    <BButton type="submit" variant="primary" :disabled="(form.loading)">{{ $t('m.save') }}</BButton>
+                                </BFormGroup>
+                            </BForm>
                         </div>
-                    </b-col>
-                </b-row>
-            </b-card>
+                    </BCol>
+                </BRow>
+            </BCard>
         </transition>
-    </b-container>
+
+
+        <BModal v-model="modal.mobileFail" :centered="true" :cancelDisabled="true" :hideFooter="true" :noCloseOnBackdrop="true" :hideHeaderClose="true">
+            <p class="my-2 text-center">
+                <div><Icon name="fa6-solid:circle-xmark" width="56" height="56" color="#dc3545" /></div>
+                <div style='margin-top:24px; font-size:20px; font-weight:bold'>{{ $t('profile.mobileValidateFail') }}</div>
+                <div style='margin-top:8px;  font-size:16px'>{{ $t('profile.mobileValidateFailHint') }}</div>
+            </p>
+
+            <div class="mt-4 text-end">
+                <BButton style="width:100%" variant="primary" :to="{name: 'profile-show'}">{{ $t('m.ok') }}</BButton>
+            </div>
+        </BModal>
+
+
+        <BModal v-model="modal.mobileSuccess" :centered="true" :cancelDisabled="true" :hideFooter="true" :noCloseOnBackdrop="true" :hideHeaderClose="true">
+            <p class="my-2 text-center">
+                <div><Icon name="fa6-solid:circle-check" width="56" height="56" color="#28a745" /></div>
+                <div style='margin-top:24px; font-size:20px; font-weight:bold'>{{ $t('profile.mobileValidateSuccess') }}</div>
+                <div style='margin-top:8px;  font-size:16px'>{{ $t('profile.mobileValidateSuccessHint') }}</div>
+            </p>
+
+            <div class="mt-4 text-end">
+                <BButton style="width:100%" variant="primary" :to="{name: 'profile-show'}">{{ $t('m.ok') }}</BButton>
+            </div>
+        </BModal>
+    </BContainer>
 </template>
-<script>
 
-import api from '~/api/api.js';
+<script setup>
 
-export default {
-    layout:'main',
+    let modal = reactive({
+        mobileFail: false,
+        mobileSuccess: false,
+    })
 
-    head() {
-        return {
-            title: this.$t('profile.title.edit')
-        }
-    },
+    const router    = useRouter();
+    const AuthStore = useAuthStore();
 
-    computed: {
-        profile () {
-            return this.$store.state.user.profile;
-        }
-    },
+    import api from '~/api/api.js';
 
-    created() {
+    let mobile = reactive({
+        code    : null,
+        number  : null,
+    });
 
-        this.$nuxt.$emit('breadcrumbLoading', [ {
-            text: this.$t('profile.title.show'),
-            to : {name : 'profile-show'}
-        }, {
-            text: this.$t('profile.title.mobile'),
-        }]);
+    let step = reactive({
+        password: true,
+        mobile: false,
+    });
 
-        this.mobile.code    = this.profile.mobile.code;
-        this.mobile.number  = this.profile.mobile.number;
-    },
+    let verification = reactive({
+        interval : null,
+        time : 60,
+        counter : 60,
+    });
 
+    let form = reactive({
+        loading : false,
+        verification : false,
 
-    data() {
-        return {
-            mobile : {
-                code    : null,
-                number  : null,
-            },
+        password : '',
 
-            step : {
-                password: true,
-                mobile: false,
-            },
-
-            verification : {
-                interval : null,
-                time : 60,
-                counter : 60,
-            },
-
-            form: {
-
-                loading : false,
-                verification : false,
-
-                password            : null,
-
-                countryCode         : null,
-                mobile              : null,
-                verificationCode    : null,
-            },
-
-            formerrs: []
-        }
-    },
-
-
-    methods: {
-
-        async onVerification(e) {
-
-            this.form.verification = true;
-
-            let ret = await api.auth.verificationSend(this.form.countryCode, this.form.mobile);
-
-            if ( !ret.status ) {
-                this.form.loading = false;
-                this.form.verification = false;
-                this.formerrs= ret.error;
-                return;
-            }
-
-            this.verification.interval = setInterval( () => {
-
-                this.verification.counter -= 1;
-
-                if ( this.verification.counter <= 0 ) {
-                    this.form.verification = false;
-
-                    clearInterval(this.verification.interval);
-                    this.verification.interval = null;
-
-                    this.verification.counter = this.verification.time;
-                }
-
-            }, 1000);
+        mobile : {
+            code    : AuthStore.profile.mobile.code,
+            number  : AuthStore.profile.mobile.number
         },
+        verificationCode    : '',
+    });
 
-        async onPasswordSubmit(e) {
+    let formerrs = reactive([]);
 
-            this.form.loading = true;
+    definePageMeta({
+        layout: "main",
+        middleware: 'auth'
+    })
 
-            let ret = await api.auth.passwordConfirm(this.form.password);
+    const { t } = useI18n()
 
-            if ( !ret.status ) {
-                this.form.loading = false;
-                this.formerrs = ret.error;
+    const { $event } = useNuxtApp();
 
-                return;
-            }
+    $event('breadcrumb:updated', [{
+        text: t('profile.title.show'),
+        to : router.resolve({name:'profile-show'}).path
+    }, {
+        text: t('profile.title.mobile'),
+    }]);
 
+    useHead({
+        title: t('profile.title.mobile')
+    })
 
-            this.form.loading = false;
+    async function onPasswordSubmit() {
 
-            this.step.password = false;
-            this.step.mobile = true;
-        },
+        form.loading = true;
 
-        async onMobileSubmit(e) {
-            this.form.loading = true;
+        let ret = await api.profile.passwordConfirm( form.password );
 
-            const h = this.$createElement;
+        if ( !ret.status ) {
+            form.loading = false;
+            formerrs = ret.error;
 
-            let ret = await api.auth.verification(this.form.countryCode, this.form.mobile, this.form.verificationCode);
-
-            if ( !ret.status ) {
-                this.form.loading = false;
-
-                const msg = h(
-                    'div', { class: ['text-center']}, [
-                        h('div', { style:'font-size:56px' }, [h('i', { class : ['fa-solid', 'fa-circle-xmark', 'text-danger'] })]),
-                        h('div', { style:'margin-top:24px; font-size:20px; font-weight:bold' }, [this.$t('profile.mobileValidateFail')]),
-                        h('div', { style:'margin-top:8px;  font-size:16px' }, [this.$t('profile.mobileValidateFailHint')]),
-                    ]
-                );
-
-                this.$bvModal.msgBoxOk([msg], {
-                    id : 'mobile-modal',
-                    okTitle: this.$t('m.ok'),
-                    headerClass: 'text-center',
-                    centered: true,
-                    okVariant: 'block btn-primary'
-                });
-
-                return;
-            }
-
-            this.$store.dispatch('user/profile', {
-                mobile : {
-                    code    : this.form.countryCode, 
-                    number  : this.form.mobile
-                }
-            });
-
-            const msg = h(
-                'div', { class: ['text-center']}, [
-                    h('div', { style:'font-size:56px' }, [h('i', { class : ['fa-solid', 'fa-circle-check', 'text-success'] })]),
-                    h('div', { style:'margin-top:24px; font-size:20px; font-weight:bold' }, [this.$t('profile.mobileValidateSuccess')]),
-                    h('div', { style:'margin-top:8px;  font-size:16px' }, [this.$t('profile.mobileValidateSuccessHint')]),
-                ]
-            );
-
-            this.$bvModal.msgBoxOk([msg], {
-                id : 'mobile-modal',
-                okTitle: this.$t('m.ok'),
-                headerClass: 'text-center',
-                centered: true,
-                okVariant: 'block btn-primary'
-            }).then(value => {
-                this.$router.push({ name: 'profile-show' });
-            });
-        },
-
-        onBlur(e){
-
-            let code = this.form.countryCode;
-
-            if (!code) return;
-
-            if ( code.substring(0, 1) != '+' )
-                this.form.countryCode = '+' + this.form.countryCode;
+            return;
         }
 
+
+        form.loading = false;
+
+        step.password = false;
+        step.mobile = true;
     }
-};
+
+    async function onVerification(e) {
+
+        form.verification = true;
+
+        let ret = await api.profile.verificationSend(form.mobile.code, form.mobile.number);
+
+        if ( !ret.status ) {
+            form.loading = false;
+            form.verification = false;
+            formerrs= ret.error;
+            return;
+        }
+
+        verification.interval = setInterval( () => {
+
+            verification.counter -= 1;
+
+            if ( verification.counter <= 0 ) {
+                form.verification = false;
+
+                clearInterval(verification.interval);
+                verification.interval = null;
+
+                verification.counter = verification.time;
+            }
+
+        }, 1000);
+    }
+
+    async function onMobileSubmit() {
+        form.loading = true;
+
+        let ret = await api.profile.verification(form.mobile.code, form.mobile.number, form.verificationCode);
+
+        if ( !ret.status ) {
+            form.loading = false;
+            modal.mobileFail = true;
+
+            return;
+        }
+    
+        AuthStore.update({mobile: form.mobile});
+
+        modal.mobileSuccess = true;
+    }
+
+    function onBlur(e){
+
+        let code = form.mobile.code;
+
+        if (!code) return;
+
+        if ( code.substring(0, 1) != '+' )
+            form.mobile.code = '+' + form.mobile.code;
+    }
+
 </script>
 
 

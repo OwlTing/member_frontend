@@ -2,19 +2,12 @@
     <div></div>
 </template>
 
-<script>
+<script setup>
 
-import api from '~/api/api';
+    definePageMeta({
+        layout: 'plain',
+    })
 
-export default {
-    layout: 'plain',
-    data() {
-        return {};
-    },
+    await navigateTo({name: 'profile-show'});
 
-    created() {
-        this.$router.push({name: 'profile-show'});
-    }
-
-}
 </script>

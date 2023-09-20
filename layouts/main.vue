@@ -1,171 +1,155 @@
 <template>
     <div id="layout-main">
-
         <div class="sidebarBox" v-bind:class="{ active: show }" @click.stop="">
             <div class="title">
                 <NuxtLink :to="{ name: 'index'}">
-                    <b-img src="~/assets/imgs/owlting_logo.svg"></b-img>
+                    <BImg src="/imgs/owlting_logo.svg" />
                 </NuxtLink>
             </div>
             <div class="profileBox clearfix">
-                <div class="float-left" style="margin-right:16px">
-                    <b-avatar variant="info" :src="profile.avatar" size="50px"/>
+                <div class="float-start" style="margin-right:16px">
+                    <BAvatar variant="info" :src="AuthStore.profile.avatar" size="50px"/>
                 </div>
                 <div style="overflow:hidden">
-                    <div class="name text-truncate">{{ profile.name }}</div>
-                    <div class="email text-truncate">{{ profile.email }}</div>
+                    <div class="name text-truncate">{{ AuthStore.profile.name }}</div>
+                    <div class="email text-truncate">{{ AuthStore.profile.email }}</div>
                 </div>
             </div>
 
-            <b-nav vertical>
-                <b-nav-item :to="{ name: 'profile-show'}" @click="show = false" :active="($route.name == 'profile-show') ? true : false">
-                    <fa icon='user' style="font-size:20px; margin-right:16px"/>{{ $t('sidebar.profile') }}
-                </b-nav-item>
+            <BNav vertical>
+                <BNavItem :to="{ name: 'profile-show'}" @click="show = false" :active="($route.name == 'profile-show') ? true : false">
+                    <Icon name="fa:user" width="16" height="16" class="me-4"/>{{ $t('sidebar.profile') }}
+                </BNavItem>
 
-                <b-nav-item class="logoutBox">
-                    <b-button variant="link" @click="logout" class="p-0">{{ $t('m.logout') }}</b-button>
-                </b-nav-item>
-            </b-nav>
+                <BNavItem class="logoutBox">
+                    <BButton variant="link" @click="logout" class="p-0">{{ $t('m.logout') }}</BButton>
+                </BNavItem>
+            </BNav>
 
             <div v-if="project.length > 0" class="mt-3">
-                <div class="small px-4">{{ $t('sidebar.consumption') }}</div>
-                <b-nav vertical>
-                    <b-nav-item :to="{ name: 'project-show', params: {code : item.code}}" v-for="(item, key) in project" :key="item.code">
-                        {{ item.name }}
-                    </b-nav-item>
-                </b-nav>
+                <div class="small px-4 my-2">{{ $t('sidebar.consumption') }}</div>
+                <BNav vertical>
+                    <BNavItem :to="{ name: 'project-show', params: {show : item.code}}" v-for="(item, key) in project" :key="item.code" @click="show = false">
+                        {{ $t(`project.title.${item.sym}`) }}
+                    </BNavItem>
+                </BNav>
             </div>
         </div>
+
         <div class="mainBox">
             <div class="navbarBox">
-                <b-navbar class="mobileBox clearfix" variant="light">
-                    <b-navbar-brand class="mb-0 float-left">
-                        <b-img src="~/assets/imgs/owlting_logo.svg" class="d-inline-block align-top"></b-img>
-                    </b-navbar-brand>
-                </b-navbar>
+                <BNavbar class="mobileBox clearfix" variant="light">
+                    <BNavbarBrand class="mb-0 float-left">
+                        <BImg src="/imgs/owlting_logo.svg" class="d-inline-block align-top" />
+                    </BNavbarBrand>
+                </BNavbar>
 
-                <b-navbar class="breadcrumbBox clearfix" variant="light">
-                    <b-breadcrumb :items="breadcrumb"></b-breadcrumb>
-                </b-navbar>
+                <BNavbar class="breadcrumbBox clearfix" variant="light">
+                    <BBreadcrumb :items="breadcrumb"></BBreadcrumb>
+                </BNavbar>
 
-                <b-navbar-nav class="avatarBox">
-                    <b-nav-item @click.stop="menuToggle">
-                        <b-avatar variant="info" :src="profile.avatar" v-bind:class="{ active: show }" size="32px"/>
+                <BNavbarNav class="avatarBox">
+                    <BNavItem @click.stop="menuToggle">
+                        <BAvatar variant="light" :src="AuthStore.profile.avatar" v-bind:class="{ active: show }" size="32px" class="me-2"/>
                         <span class="toggle" style="line-height:32px; vertical-align:middle; color:#3C4145">
-                            <fa icon="bars"  v-if="!show" style="font-size:12px"/>
-                            <fa icon="xmark" v-if="show"  style="font-size:20px"/>
+                            <Icon name="fa:bars" v-if="!show" width="12" height="12" />
+                            <Icon name="fa6-solid:xmark" v-if="show" width="20" height="20" />
                         </span>
-                    </b-nav-item>
+                    </BNavItem>
 
                     <transition name="dropdown">
                         <div class="menuBox" v-show="show" v-on:click.stop="">
                             <div class="profileBox clearfix" style="border-bottom:1px solid #e9edef">
-                                <div class="float-left" style="margin-right:16px">
-                                    <b-avatar variant="info" :src="profile.avatar" size="50px"/>
+                                <div class="float-start" style="margin-right:16px">
+                                    <BAvatar variant="light" :src="AuthStore.profile.avatar" size="50px"/>
                                 </div>
                                 <div style="overflow:hidden">
-                                    <div class="name text-truncate">{{ profile.name }}</div>
-                                    <div class="email text-truncate">{{ profile.email }}</div>
+                                    <div class="name text-truncate">{{ AuthStore.profile.name }}</div>
+                                    <div class="email text-truncate">{{ AuthStore.profile.email }}</div>
                                 </div>
                             </div>
 
                             <div class="logoutBox">
-                                <b-button variant="link" @click="logout" class="p-0">{{ $t('m.logout') }}</b-button>
+                                <BButton variant="link" @click="logout" class="p-0">{{ $t('m.logout') }}</BButton>
                             </div>
                         </div>
                     </transition>
-                </b-navbar-nav>
+                </BNavbarNav>
             </div>
 
             <section>
-                <transition name="fade">
-                    <Nuxt />
-                </transition>
+                <NuxtPage />
             </section>
         </div>
     </div>
 </template>
 
-<script>
+<script setup lang="ts">
+    import api from '~/api/api.js';
 
-import api from '~/api/api.js';
+    const { $event, $listen } = useNuxtApp();
 
-export default {
-    scrollToTop: true,
+    let breadcrumb = ref([]);
 
-    computed: {
-        profile () {
-            return this.$store.state.user.profile;
+    $listen('breadcrumb:updated', (b) => {
+
+        let item = [{
+            text: t('m.app'),
+            href : '/'
+        }];
+
+        for ( let k in b) {
+            item.push(b[k]);
         }
-    },
 
-    data () {
-        return {
-            show: false,
-            breadcrumb : [],
+        breadcrumb.value = item;
+    });
 
-            project : [],
-        }
-    },
+    const AuthStore = useAuthStore();
 
-    async created () {
+    const { t } = useI18n()
 
-        this.$nuxt.$on('breadcrumbLoading', ($event) => this.breadcrumbLoading($event))
+    let show = ref(null);
 
-        let ret = await api.project.index();
-        this.project = ret.data.project;
-    },
+    let project = reactive([]);
+    
+    let ret = await api.project.index();
+    
+    project = ret.data.project;
 
-    methods: {
+    const cfg = useRuntimeConfig()
 
-        breadcrumbLoading( breadcrumb ) {
+    async function logout(){
 
-            let item = [{
-                text: this.$t('m.app'),
-                to : { name: 'index' }
-            }];
+        let ret = await api.sys.logout();
 
-            for ( let k in breadcrumb) {
-                item.push(breadcrumb[k]);
-            }
+        AuthStore.logout();
 
-            this.breadcrumb = item;
-        },
+        menuToggle();
 
-        close(){
-            this.show = false;
-        },
+        await navigateTo( ret.data.redirect, {
+            external: true
+        });
 
-        async logout(){
-
-            const ret = await api.auth.logout();
-            this.$store.dispatch('user/logout');
-
-            this.menuToggle();
-
-            window.location.href = process.env.AUTH_LOGOUT_REDIRECT;
-
-            return;
-        },
-
-        menuToggle(){
-
-            this.show = !this.show;
-
-            const evt = (e) => {
-                this.show = false;
-                window.removeEventListener('click', evt);
-            };
-
-            window.addEventListener('click', evt);
-        }
+        return;
     }
-}
+
+    function menuToggle(){
+
+        show.value = !show.value;
+
+        const evt = (e) => {
+            show.value = false;
+            window.removeEventListener('click', evt);
+        };
+
+        window.addEventListener('click', evt);
+    }
 
 </script>
 
 
 <style>
-  .fade-enter-active, .fade-leave-active { transition: opacity .5s; }
-  .fade-enter, .fade-leave-active { opacity: 0; }
+    .page-enter-active, .page-leave-active {transition:all .3s;}
+    .page-enter-from, .page-leave-to {opacity:0; filter: blur(.7rem);}
 </style>

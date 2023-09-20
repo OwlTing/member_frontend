@@ -1,132 +1,116 @@
 <template>
-    <b-container>
-        <b-card>
-            <b-card-title class="clearfix">
+    <BContainer>
+        <BCard>
+            <BCardTitle class="clearfix">
                 <NuxtLink :to="{ name: 'profile-show'}">
-                    <fa icon="arrow-left" class="mr-3" />
+                    <Icon name="ph:arrow-left" width="25" height="25" class="me-3"/>
                 </NuxtLink>
                 <span>{{ $t('profile.title.preferences') }}</span>
-            </b-card-title>
+            </BCardTitle>
 
             <b-row>
-                <b-col md="6" sm="10" xs="12">
+                <BCol md="6" sm="10" xs="12">
                     <div class="mt-5">
-                        <b-form @submit="onSubmit">
+                        <BForm @submit="onSubmit" @submit.stop.prevent>
 
-                            <b-form-group :label="$t('profile.language')" class="mt-5" required>
-                                <b-form-select v-model="form.lang" :options=" [
+                            <BFormGroup :label="$t('profile.language')" class="mt-5" required>
+                                <BFormSelect v-model="form.lang" :options=" [
                                     { text: $t('m.selectPlease'),               value: null, disabled: true },
                                     { text: $t('profile.languageHint.en'),      value: 'en'     },
                                     { text: $t('profile.languageHint.ja'),      value: 'ja'     },
                                     { text: $t('profile.languageHint.zh-TW'),   value: 'zh-TW'  }
                                 ]" required>
-                                </b-form-select>
-                            </b-form-group>
+                                </BFormSelect>
+                            </BFormGroup>
 
-                            <b-form-group :label="$t('profile.currency')" class="mt-5" required>
-                                <b-form-select v-model="form.currency" :options=" [
+                            <BFormGroup :label="$t('profile.currency')" class="mt-5" required>
+                                <BFormSelect v-model="form.currency" :options=" [
                                     { text: $t('m.selectPlease'), value: null, disabled: true    },
                                     { text: $t('profile.currencyHint.TWD'), value: 'TWD'},
                                     { text: $t('profile.currencyHint.USD'), value: 'USD'    },
                                     { text: $t('profile.currencyHint.JPY'), value: 'JPY'    },
                                     { text: $t('profile.currencyHint.EUR'), value: 'EUR'    },
                                 ]" required>
-                                </b-form-select>
-                            </b-form-group>
+                                </BFormSelect>
+                            </BFormGroup>
 
-                            <b-form-group class="mt-5">
-                                <b-button type="submit" variant="primary" :disabled="(form.loading)">{{ $t('m.save') }}</b-button>
-                            </b-form-group>
-                        </b-form>
+                            <BFormGroup class="mt-5">
+                                <BButton type="submit" variant="primary" :disabled="(form.loading)">{{ $t('m.save') }}</BButton>
+                            </BFormGroup>
+                        </BForm>
                     </div>
-                </b-col>
+                </BCol>
             </b-row>
-        </b-card>
+        </BCard>
 
-    </b-container>
+    </BContainer>
 </template>
-<script>
 
-import api from '~/api/api.js';
+<script setup>
 
-export default {
+    const AuthStore = useAuthStore();
 
-    layout:'main',
+    const router = useRouter();
 
-    head() {
-        return {
-            title: this.$t('profile.title.preferences')
+    import api from '~/api/api.js';
+
+    definePageMeta({
+        layout: "main",
+        middleware: 'auth'
+    })
+
+
+    const { locale, t } = useI18n()
+
+    useHead({
+        title: t('profile.title.preferences')
+    })
+
+    const { $event } = useNuxtApp();
+
+    $event('breadcrumb:updated', [{
+        text: t('profile.title.show'),
+        to : router.resolve({name:'profile-show'}).path
+    }, {
+        text: t('profile.title.preferences')
+    }]);
+
+
+    let form = reactive({
+        loading : false,
+
+        lang        : AuthStore.profile.lang,
+        currency    : AuthStore.profile.currency
+    });
+
+    let langMap = reactive({
+        'en'    : 'en-US',
+        'ja'    : 'ja-JP',
+        'zh-TW' : 'zh-TW',
+    });
+
+    async function onSubmit(e) {
+        e.preventDefault()
+
+        form.loading = true;
+
+        let ret = await api.profile.update({
+            lang     : form.lang,
+            currency : form.currency,
+        });
+
+        if ( !ret.status ) {
+            form.loading = false;
+            return;
         }
-    },
 
-    computed: {
-        profile () {
-            return this.$store.state.user.profile;
-        }
-    },
+        locale.value = langMap[ form.lang ];
 
-    metaInfo: function () {
-        return {title: this.$t('profile.title.preferences')}
-    },
+        form.loading = true;
 
-    data() {
-        return {
-            email : '',
+        AuthStore.update(ret.data.user);
 
-            form: {
-                loading : false,
-
-                lang        : null,
-                currency    : null
-            },
-
-            langMap : {
-                'en'    : 'en-US',
-                'ja'    : 'ja-JP',
-                'zh-TW' : 'zh-TW',
-            }
-        }
-    },
-
-    created() {
-
-        this.form.lang      = this.profile.lang;
-        this.form.currency  = this.profile.currency;
-
-        this.$emit('breadcrumbLoading', [ {
-            text    : this.$t('profile.title.show'),
-            to      : {name : 'profile-show'}
-        }, {
-            text: this.$t('profile.title.preferences'),
-        }]);
-    },
-
-    methods: {
-
-        async onSubmit(e) {
-            e.preventDefault()
-
-            this.form.loading = true;
-
-            let ret = await api.auth.update({
-                lang     : this.form.lang,
-                currency : this.form.currency,
-            });
-
-            if ( !ret.status ) {
-                this.form.loading = false;
-                return;
-            }
-
-            this.$store.dispatch('user/profile', {
-                lang     : this.form.lang,
-                currency : this.form.currency,
-            });
-
-            this.$i18n.locale = this.langMap[ this.form.lang ];
-
-            this.$router.push({ name: 'profile-show' });
-        },
+        await navigateTo({ name: 'profile-show' });
     }
-};
+
 </script>

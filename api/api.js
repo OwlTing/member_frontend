@@ -1,7 +1,7 @@
-import { app }  from '~/api/app';
-import { auth } from '~/api/auth';
-import { project } from '~/api/project';
+import { sys }      from '~/api/sys';
+import { profile }  from '~/api/profile';
+import { project }  from '~/api/project';
 
 export default {
-    app, auth, project
-} 
+    sys, profile, project
+}

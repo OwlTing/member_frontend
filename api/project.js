@@ -1,16 +1,18 @@
-import http from '~/utils/client';
+import http from '~/composables/useRequest.js'
 
 export const project = {
-    index : function() {
-        return http.get('/project').then( ret => {
-            return ret.data;
-        });
+    index: () => {
+        return http.get('/project', {});
     },
 
-    show : function(code) {
-        return http.get(`/project/${code}`).then( ret => {
-            return ret.data;
-        });
+    show: (code) => {
+        return http.get(`/project/${code}`, {});
     },
 
-};
+    reservation: (code, size, page) => {
+        return http.get(`/project/${code}/reservation`, {
+            size: size,
+            page: page,
+        });
+    }
+}

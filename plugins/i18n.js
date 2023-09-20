@@ -1,22 +1,25 @@
-import Vue from 'vue';
-import VueI18n from 'vue-i18n';
+import { createI18n } from 'vue-i18n';
 
-Vue.use(VueI18n);
+import zhTW from '@/locales/zhTW.ts';
+import jaJP from '@/locales/jaJP.ts';
+import enUS from '@/locales/enUS.ts';
 
-import locale from '~/locales/locales.js'
+export default defineNuxtPlugin(( nuxtApp ) => {
 
-export default ({ app, store }) => {
-
-    let langMap = {
-        'en'    : 'en-US',
-        'ja'    : 'ja-JP',
-        'zh-TW' : 'zh-TW',
-    };
-
-    app.i18n = new VueI18n({
-        locale                  : langMap[ store.state.user.profile.lang ],
-        fallbackLocale          : 'en-US',
-        messages                : locale,
-        silentTranslationWarn   : true,
+    const i18n = createI18n({
+        legacy: false,
+        lazy: true,
+        warnHtmlMessage: false,
+        globalInjection: true,
+        useScope: 'global',
+        locale: 'zh-TW',
+        messages: {
+            'zh-TW': zhTW,
+            'ja-JP': jaJP,
+            'en-US': enUS,
+        },
     });
-}
+
+    nuxtApp.vueApp.use(i18n);
+    
+})
