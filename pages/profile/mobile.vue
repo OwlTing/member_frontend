@@ -22,8 +22,8 @@
                                 <BForm @submit="onPasswordSubmit" @submit.stop.prevent>
                                     <BFormGroup :label="$t('profile.password')" required>
                                         <BFormInput type="password" v-model="form.password" autofocus required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('password')) }"></BFormInput>
-                                        <BFormInvalidFeedback v-if="formerrs['password']">
-                                            {{ formerrs['password'].join(', ') }}
+                                        <BFormInvalidFeedback :force-show="true" :key="inpKey">
+                                             <template v-if="formerrs.hasOwnProperty('password')">{{ formerrs.password.join(', ') }}</template>
                                         </BFormInvalidFeedback>
                                     </BFormGroup>
 
@@ -53,16 +53,16 @@
                                     <BCol cols="4">
                                         <BFormGroup :label="$t('profile.countryCode')" required>
                                             <BFormInput v-model="form.mobile.code" autofocus required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('countryCode')) }" placeholder='+886' @blur="onBlur"></BFormInput>
-                                            <BFormInvalidFeedback v-if="formerrs['countryCode']">
-                                                {{ formerrs['countryCode'].join(', ') }}
+                                            <BFormInvalidFeedback :force-show="true" :key="inpKey">
+                                                 <template v-if="formerrs.hasOwnProperty('countryCode')">{{ formerrs.countryCode.join(', ') }}</template>
                                             </BFormInvalidFeedback>
                                         </BFormGroup>
                                     </BCol>
                                     <BCol>
                                         <BFormGroup :label="$t('profile.mobile')" required>
                                             <BFormInput v-model="form.mobile.number" required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('mobile')) }"></BFormInput>
-                                            <BFormInvalidFeedback v-if="formerrs['mobile']">
-                                                {{ formerrs['mobile'].join(', ') }}
+                                            <BFormInvalidFeedback :force-show="true" :key="inpKey">
+                                                <template v-if="formerrs.hasOwnProperty('mobile')">{{ formerrs.mobile.join(', ') }}</template>
                                             </BFormInvalidFeedback>
                                         </BFormGroup>
                                     </BCol>
@@ -72,8 +72,8 @@
                                     <BCol cols="6">
                                         <BFormGroup :label="$t('profile.verificationCode')" required>
                                             <BFormInput v-model="form.verificationCode" required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('verificationCode')) }"></BFormInput>
-                                            <BFormInvalidFeedback v-if="formerrs['verificationCode']">
-                                                {{ formerrs['verificationCode'].join(', ') }}
+                                            <BFormInvalidFeedback :force-show="true" :key="inpKey">
+                                                <template v-if="formerrs.hasOwnProperty('verificationCode')">{{ formerrs.verificationCode.join(', ') }}</template>
                                             </BFormInvalidFeedback>
                                         </BFormGroup>
                                     </BCol>
@@ -138,6 +138,8 @@
 
     import api from '~/api/api.js';
 
+    let inpKey = ref(0);
+
     let mobile = reactive({
         code    : null,
         number  : null,
@@ -167,7 +169,7 @@
         verificationCode    : '',
     });
 
-    let formerrs = reactive([]);
+    let formerrs = reactive({});
 
     definePageMeta({
         layout: "main",
@@ -199,6 +201,8 @@
             form.loading = false;
             formerrs = ret.error;
 
+            inpKey.value = inpKey.value+1;
+
             return;
         }
 
@@ -219,6 +223,9 @@
             form.loading = false;
             form.verification = false;
             formerrs= ret.error;
+
+            inpKey.value = inpKey.value+1;
+
             return;
         }
 
@@ -249,7 +256,7 @@
 
             return;
         }
-    
+
         AuthStore.update({mobile: form.mobile});
 
         modal.mobileSuccess = true;
@@ -264,7 +271,6 @@
         if ( code.substring(0, 1) != '+' )
             form.mobile.code = '+' + form.mobile.code;
     }
-
 </script>
 
 

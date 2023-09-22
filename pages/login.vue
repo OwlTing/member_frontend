@@ -26,8 +26,12 @@
     AuthStore.tokenSet(token, refresh);
 
     let ret = await api.sys.me();
+    
+    let me = ret.data.me;
+    
+    me.mobile = JSON.parse(me.mobile);
 
-    AuthStore.user(ret.data.me);
+    AuthStore.user(me);
 
     await navigateTo({name: 'profile-show'});
     

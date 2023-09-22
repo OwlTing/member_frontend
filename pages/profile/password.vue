@@ -16,22 +16,22 @@
                             <BFormGroup :label="$t('profile.oldPassword')" class="mt-5" required style="position:relative" >
                                 <div style="position:absolute; top:-30px; right:0; cursor:pointer" class="text-secondary small" @click="passwordForgetModalShow">{{ $t('profile.passwordForget') }}</div>
                                 <BFormInput type="password" v-model="form.oldPassword" autofocus required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('oldPassword')) }"></BFormInput>
-                                <BFormInvalidFeedback v-if="formerrs['oldPassword']">
-                                    {{ formerrs['oldPassword'].join(', ') }}
+                                <BFormInvalidFeedback :force-show="true" :key="inpKey">
+                                    <template v-if="formerrs.hasOwnProperty('oldPassword')">{{ formerrs.oldPassword.join(', ') }}</template>
                                 </BFormInvalidFeedback>
                             </BFormGroup>
 
                             <BFormGroup :label="$t('profile.newPassword')" class="mt-5" required>
                                 <BFormInput type="password" v-model="form.newPassword1" required :placeholder="$t('profile.newPassword1Placeholder')" autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('newPassword1')) }"></BFormInput>
-                                <BFormInvalidFeedback v-if="formerrs['newPassword1']">
-                                    {{ formerrs['newPassword1'].join(', ') }}
+                                <BFormInvalidFeedback :force-show="true" :key="inpKey">
+                                    <template v-if="formerrs.hasOwnProperty('newPassword1')">{{ formerrs.newPassword1.join(', ') }}</template>
                                 </BFormInvalidFeedback>
                             </BFormGroup>
 
                             <BFormGroup required>
                                 <BFormInput type="password" v-model="form.newPassword2" required :placeholder="$t('profile.newPassword2Placeholder')" autocomplete="off" class="mt-3" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('newPassword2')) }"></BFormInput>
-                                <BFormInvalidFeedback v-if="formerrs['newPassword2']">
-                                    {{ formerrs['newPassword2'].join(', ') }}
+                                <BFormInvalidFeedback :force-show="true" :key="inpKey">
+                                    <template v-if="formerrs.hasOwnProperty('newPassword2')">{{ formerrs.newPassword2.join(', ') }}</template>
                                 </BFormInvalidFeedback>
                             </BFormGroup>
 
@@ -114,6 +114,7 @@
         newPassword2 : '',
     });
 
+    let inpKey = ref(0);
     let formerrs = reactive([]);
 
 
@@ -125,6 +126,8 @@
         if ( !ret.status ) {
             form.loading = false;
             formerrs = ret.error;
+
+            inpKey.value += 1;
 
             return;
         }

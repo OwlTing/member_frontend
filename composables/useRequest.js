@@ -8,6 +8,7 @@ export const req = async (method, url, params={}, needAuth=true, headers={} ) =>
     let fetch = async (method, url, params={}, needAuth=true) => {
 
         const token = AuthStore.token;
+        const lang  = AuthStore.profile.lang;
 
         let opt = {
             retry: 3,
@@ -18,6 +19,7 @@ export const req = async (method, url, params={}, needAuth=true, headers={} ) =>
             headers: {
                 'Accept': 'application/json',
                 'Access-Control-Allow-Origin' : '*',
+                'Accept-Language': (lang) ? lang : 'en',
                 ...headers,
             },
 
@@ -48,7 +50,7 @@ export const req = async (method, url, params={}, needAuth=true, headers={} ) =>
 
         if ( !newToken.status ) {
             AuthStore.logout();
-         
+
             await navigateTo(cfg.public.authRedirect, {
                 external: true
             });

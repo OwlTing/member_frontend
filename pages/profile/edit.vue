@@ -69,9 +69,8 @@
                                 <client-only>
                                     <date-picker placeholder="YYYY-MM-DD" format="yyyy-MM-dd" v-model="form.birthday" input-class="form-control" :typeable="true" :enable-time-picker="false" :required="true" :bootstrap-styling="true" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('birthday')) }" auto-apply :clearable="false" required />
                                 </client-only>
-
-                                <BFormInvalidFeedback v-if="formerrs.hasOwnProperty('birthday')">
-                                    {{ formerrs.birthday.join(', ') }}
+                                <BFormInvalidFeedback :force-show="true" :key="inpKey">
+                                    <template v-if="formerrs.hasOwnProperty('birthday')">{{ formerrs.birthday.join(', ') }}</template>
                                 </BFormInvalidFeedback>
                             </BFormGroup>
 
@@ -126,6 +125,7 @@
 
     const AuthStore = useAuthStore();
     
+    let inpKey = ref(0);
     const cropperBox = ref();
 
     let uploadBox   = ref(null);
@@ -269,7 +269,7 @@
         if ( !ret.status ) {
             form.loading = false;
             formerrs = ret.error;
-
+            inpKey.value += 1;
             return;
         }
 
