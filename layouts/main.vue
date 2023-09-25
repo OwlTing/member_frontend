@@ -18,7 +18,7 @@
 
             <BNav vertical>
                 <BNavItem :to="{ name: 'profile-show'}" @click="show = false" :active="($route.name == 'profile-show') ? true : false">
-                    <Icon name="fa:user" width="16" height="16" class="me-4"/>{{ $t('sidebar.profile') }}
+                    <Icon name="fa:user" width="16" height="16" class="me-4" style="margin-top:-4px" />{{ $t('sidebar.profile') }}
                 </BNavItem>
 
                 <BNavItem class="logoutBox">
@@ -85,6 +85,7 @@
 </template>
 
 <script setup lang="ts">
+
     import api from '~/api/api.js';
 
     const { $event, $listen } = useNuxtApp();
@@ -95,7 +96,7 @@
 
         let item = [{
             text: t('m.app'),
-            href : '/'
+            to : router.resolve({name:'profile-show'}).path
         }];
 
         for ( let k in b) {
