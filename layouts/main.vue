@@ -85,6 +85,7 @@
 </template>
 
 <script setup lang="ts">
+    const router    = useRouter();
 
     import api from '~/api/api.js';
 
