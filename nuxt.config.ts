@@ -3,7 +3,11 @@ export default defineNuxtConfig({
     ssr: false,
     
     devtools: { enabled: true },
-
+    
+    build: {
+        transpile: ['@vuepic/vue-datepicker']
+    },
+    
     runtimeConfig: {
         public: {
             authRedirect: process.env.NUXT_AUTH_REDIRECT,
@@ -20,6 +24,8 @@ export default defineNuxtConfig({
         pageTransition: { name: 'page', mode: 'out-in' },
 
         head: {
+            title : 'OwlTing Member',
+            
             viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
             charset: 'utf-8',
 

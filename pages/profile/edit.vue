@@ -65,10 +65,10 @@
                             </BFormGroup>
 
                             <BFormGroup :label="$t('profile.birthday')" style="margin-top:40px" required>
-
                                 <client-only>
-                                    <date-picker placeholder="YYYY-MM-DD" format="yyyy-MM-dd" v-model="form.birthday" input-class="form-control" :typeable="true" :enable-time-picker="false" :required="true" :bootstrap-styling="true" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('birthday')) }" auto-apply :clearable="false" required />
+                                    <date-picker style="width:150px" placeholder="YYYY-MM-DD" format="yyyy-MM-dd" v-model="form.birthday" input-class="form-control" :typeable="true" :enable-time-picker="false" :required="true" :bootstrap-styling="true" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('birthday')) }" auto-apply :clearable="false" required />
                                 </client-only>
+
                                 <BFormInvalidFeedback :force-show="true" :key="inpKey">
                                     <template v-if="formerrs.hasOwnProperty('birthday')">{{ formerrs.birthday.join(', ') }}</template>
                                 </BFormInvalidFeedback>

@@ -7,7 +7,12 @@
 <script setup>
 
     import api from '~/api/api';
-
+    const { t } = useI18n()
+    
+    useHead({
+        title: 'Loading...'
+    })
+    
     definePageMeta({
         layout: "plain",
     });

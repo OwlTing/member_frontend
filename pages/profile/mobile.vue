@@ -46,53 +46,50 @@
                 </BCardTitle>
 
                 <BRow>
-                    <BCol md="7" sm="10" xs="12">
-                        <div class="mt-5">
-                            <BForm @submit="onMobileSubmit" @submit.stop.prevent>
-                                <BRow>
-                                    <BCol cols="4">
-                                        <BFormGroup :label="$t('profile.countryCode')" required>
-                                            <BFormInput v-model="form.mobile.code" autofocus required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('countryCode')) }" placeholder='+886' @blur="onBlur"></BFormInput>
-                                            <BFormInvalidFeedback :force-show="true" :key="inpKey">
-                                                 <template v-if="formerrs.hasOwnProperty('countryCode')">{{ formerrs.countryCode.join(', ') }}</template>
-                                            </BFormInvalidFeedback>
-                                        </BFormGroup>
-                                    </BCol>
-                                    <BCol>
-                                        <BFormGroup :label="$t('profile.mobile')" required>
-                                            <BFormInput v-model="form.mobile.number" required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('mobile')) }"></BFormInput>
-                                            <BFormInvalidFeedback :force-show="true" :key="inpKey">
-                                                <template v-if="formerrs.hasOwnProperty('mobile')">{{ formerrs.mobile.join(', ') }}</template>
-                                            </BFormInvalidFeedback>
-                                        </BFormGroup>
-                                    </BCol>
-                                </BRow>
+                    <BCol md="7" sm="12" class="mt-5">
+                        <BForm @submit="onMobileSubmit" @submit.stop.prevent>
+                            <BRow>
+                                <BCol cols="4">
+                                    <BFormGroup :label="$t('profile.countryCode')" required>
+                                        <BFormInput v-model="form.mobile.code" autofocus required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('countryCode')) }" placeholder='+886' @blur="onBlur"></BFormInput>
+                                        <BFormInvalidFeedback :force-show="true" :key="inpKey">
+                                             <template v-if="formerrs.hasOwnProperty('countryCode')">{{ formerrs.countryCode.join(', ') }}</template>
+                                        </BFormInvalidFeedback>
+                                    </BFormGroup>
+                                </BCol>
+                                <BCol cols="8">
+                                    <BFormGroup :label="$t('profile.mobile')" required>
+                                        <BFormInput v-model="form.mobile.number" required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('mobile')) }"></BFormInput>
+                                        <BFormInvalidFeedback :force-show="true" :key="inpKey">
+                                            <template v-if="formerrs.hasOwnProperty('mobile')">{{ formerrs.mobile.join(', ') }}</template>
+                                        </BFormInvalidFeedback>
+                                    </BFormGroup>
+                                </BCol>
+                            </BRow>
 
-                                <BRow class="mt-5">
-                                    <BCol cols="6">
-                                        <BFormGroup :label="$t('profile.verificationCode')" required>
-                                            <BFormInput v-model="form.verificationCode" required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('verificationCode')) }"></BFormInput>
-                                            <BFormInvalidFeedback :force-show="true" :key="inpKey">
-                                                <template v-if="formerrs.hasOwnProperty('verificationCode')">{{ formerrs.verificationCode.join(', ') }}</template>
-                                            </BFormInvalidFeedback>
-                                        </BFormGroup>
-                                    </BCol>
-                                    <BCol>
-                                        <BFormGroup>
-                                            <div style="height:40px"></div>
-                                            <BButton variant="success" :disabled="(form.verification)" class="btn-block" @click="onVerification">
-                                                <template v-if="!form.verification">{{ $t('profile.verificationCodeGet') }}</template>
-                                                <template v-else>{{ $t('profile.verificationCountDown', {time: verification.counter}) }}</template>
-                                            </BButton>
-                                        </BFormGroup>
-                                    </BCol>
-                                </BRow>
+                            <BRow class="mt-5">
+                                <BCol cols="12">
+                                    <BFormGroup class="ms-3 float-end">
+                                        <div style="height:40px"></div>
+                                        <BButton variant="success" :disabled="(form.verification)" class="btn-block" @click="onVerification">
+                                            <template v-if="!form.verification">{{ $t('profile.verificationCodeGet') }}</template>
+                                            <template v-else>{{ $t('profile.verificationCountDown', {time: verification.counter}) }}</template>
+                                        </BButton>
+                                    </BFormGroup>
 
-                                <BFormGroup class="mt-5">
-                                    <BButton type="submit" variant="primary" :disabled="(form.loading)">{{ $t('m.save') }}</BButton>
-                                </BFormGroup>
-                            </BForm>
-                        </div>
+                                    <BFormGroup :label="$t('profile.verificationCode')" required>
+                                        <BFormInput v-model="form.verificationCode" required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('verificationCode')) }"></BFormInput>
+                                        <BFormInvalidFeedback :force-show="true" :key="inpKey">
+                                            <template v-if="formerrs.hasOwnProperty('verificationCode')">{{ formerrs.verificationCode.join(', ') }}</template>
+                                        </BFormInvalidFeedback>
+                                    </BFormGroup>
+                                </BCol>
+                            </BRow>
+
+                            <BFormGroup class="mt-5">
+                                <BButton type="submit" variant="primary" :disabled="(form.loading)">{{ $t('m.save') }}</BButton>
+                            </BFormGroup>
+                        </BForm>
                     </BCol>
                 </BRow>
             </BCard>
