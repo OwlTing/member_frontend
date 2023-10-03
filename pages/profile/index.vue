@@ -23,7 +23,7 @@
             <BCardTitle class="clearfix">
                 <div class="float-end">
                     <NuxtLink :to="{ name: 'profile-edit'}">
-                       <Icon name="fa:angle-right" width="17" height="17"/>
+                       <Icon name="fa:angle-right" width="17" height="17"  />
                     </NuxtLink>
                 </div>
 

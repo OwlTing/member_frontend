@@ -2,7 +2,7 @@ export default {
     title : {
         show : '個人資料',
         edit : '編輯個人資料',
-
+        
         security : '帳戶安全',
             password : '變更密碼',
 
@@ -11,7 +11,8 @@ export default {
         mobile : '手機綁定',
         provider : '外部帳號連結',
         preferences : '偏好設定',
-        twoFactor : '兩階段驗證'
+        twoFactor : '兩階段驗證',
+        premium : '會員方案',
     },
 
     avatar : '大頭貼',
@@ -116,4 +117,6 @@ export default {
             hint: 'Google 身分驗證器',
         }
     },
+    
+    
 }

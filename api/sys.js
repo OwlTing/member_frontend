@@ -12,7 +12,8 @@ export const sys = {
     me: () => {
         return http.get("auth/me");
     },
-    
 
-
+    premium: () => {
+        return http.post("auth/premium");
+    },
 }

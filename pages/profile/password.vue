@@ -2,7 +2,7 @@
     <BContainer>
         <BCard>
             <BCardTitle class="clearfix">
-                <NuxtLink :to="{ name: 'profile-show'}">
+                <NuxtLink :to="{ name: 'profile'}">
                     <Icon name="ph:arrow-left" width="25" height="25" class="me-3"/>
                 </NuxtLink>
                 <span>{{ $t('profile.title.password') }}</span>
@@ -48,7 +48,7 @@
             <p class="my-2">{{ $t('profile.passwordChanged') }}</p>
 
             <div class="mt-4 text-end">
-                <BButton variant="primary" :to="{name: 'profile-show'}">{{ $t('m.ok') }}</BButton>
+                <BButton variant="primary" :to="{name: 'profile'}">{{ $t('m.ok') }}</BButton>
             </div>
         </BModal>
 
@@ -56,7 +56,7 @@
             <p class="my-2">{{ $t('profile.passwordForgetHint', {email : AuthStore.profile.email}) }}</p>
 
             <div class="mt-4 text-end">
-                <BButton variant="primary" :to="{name: 'profile-show'}">{{ $t('m.ok') }}</BButton>
+                <BButton variant="primary" :to="{name: 'profile'}">{{ $t('m.ok') }}</BButton>
             </div>
         </BModal>
 
@@ -64,7 +64,7 @@
             <p class="my-2">{{ $t('profile.passwordForgetError') }}</p>
 
             <div class="mt-4 text-end">
-                <BButton variant="primary" :to="{name: 'profile-show'}">{{ $t('m.ok') }}</BButton>
+                <BButton variant="primary" :to="{name: 'profile'}">{{ $t('m.ok') }}</BButton>
             </div>
         </BModal>
     </BContainer>
@@ -95,7 +95,7 @@
 
     $event('breadcrumb:updated', [{
         text: t('profile.title.show'),
-        to : router.resolve({name:'profile-show'}).path
+        to : router.resolve({name:'profile'}).path
     }, {
         text: t('profile.title.password'),
     }]);

@@ -2,7 +2,7 @@
     <BContainer>
         <BCard>
             <BCardTitle class="clearfix">
-                <NuxtLink :to="{ name: 'profile-show'}">
+                <NuxtLink :to="{ name: 'profile'}">
                     <Icon name="ph:arrow-left" width="25" height="25" class="me-3"/>
                 </NuxtLink>
                 <span>{{ $t('profile.title.edit') }}</span>
@@ -114,7 +114,7 @@
 
     $event('breadcrumb:updated', [{
         text: t('profile.title.show'),
-        to : router.resolve({name:'profile-show'}).path
+        to : router.resolve({name:'profile'}).path
     }, {
         text: t('m.edit'),
     }]);
@@ -277,7 +277,7 @@
 
         AuthStore.update(ret.data.user);
 
-        await navigateTo({ name: 'profile-show' });
+        await navigateTo({ name: 'profile' });
     }
 
 </script>

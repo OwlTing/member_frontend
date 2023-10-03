@@ -17,10 +17,29 @@
             </div>
 
             <BNav vertical>
-                <BNavItem :to="{ name: 'profile-show'}" @click="show = false" :active="($route.name == 'profile-show') ? true : false">
-                    <Icon name="fa:user" width="16" height="16" class="me-4" style="margin-top:-4px" />{{ $t('sidebar.profile') }}
+                <BNavItem :to="{ name: 'profile'}" @click="show = false" :active="($route.name == 'profile') ? true : false">
+                    <div class="clearfix">
+                        <div class="float-start me-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+                                <path d="M12.6185 11.387C12.4975 11.05 12.2405 10.7795 11.91 10.6415L7.974 8.9945H9.174C9.8785 8.9945 10.4495 8.4235 10.4495 7.719V1.775C10.4495 1.071 9.8785 0.5 9.174 0.5H4.7815C4.077 0.5 3.506 1.071 3.506 1.775V7.719C3.506 8.4235 4.077 8.9945 4.7815 8.9945H5.9915L2.0705 10.6415C1.741 10.7795 1.4845 11.0495 1.364 11.3865L0 15.186C4.341 17.6015 9.622 17.605 13.966 15.1945L13.982 15.186L12.6185 11.387Z"/>
+                            </svg>
+                        </div>
+                        <span>{{ $t('sidebar.profile') }}</span>
+                    </div>
                 </BNavItem>
+<!--
+                <BNavItem :to="{ name: 'premium'}" @click="show = false" :active="($route.name == 'premium') ? true : false">
+                    <div class="clearfix">
+                        <div class="float-start me-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+                                <path d="M17.3332 9.00002C17.3332 13.6024 13.6022 17.3334 8.99984 17.3334C4.39746 17.3334 0.666504 13.6024 0.666504 9.00002C0.666504 4.39765 4.39746 0.666687 8.99984 0.666687C13.6022 0.666687 17.3332 4.39765 17.3332 9.00002ZM8.99984 12.8502C10.3417 10.7122 12.397 9.06722 14.8332 8.24863C13.3921 6.66377 11.3128 5.66669 8.99984 5.66669C6.68685 5.66669 4.6076 6.66328 3.1665 8.24863C5.60126 9.06722 7.65801 10.7127 8.99984 12.8502Z"/>
+                            </svg>
 
+                        </div>
+                        <span>{{ $t('sidebar.premium') }}</span>
+                    </div>
+                </BNavItem>
+-->
                 <BNavItem class="logoutBox">
                     <BButton variant="link" @click="logout" class="p-0">{{ $t('m.logout') }}</BButton>
                 </BNavItem>
@@ -97,7 +116,7 @@
 
         let item = [{
             text: t('m.app'),
-            to : router.resolve({name:'profile-show'}).path
+            to : router.resolve({name:'profile'}).path
         }];
 
         for ( let k in b) {
@@ -114,9 +133,9 @@
     let show = ref(null);
 
     let project = reactive([]);
-    
+
     let ret = await api.project.index();
-    
+
     project = ret.data.project;
 
     const cfg = useRuntimeConfig()

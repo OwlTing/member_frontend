@@ -58,7 +58,7 @@ let lang = {
 
     sidebar: {
         profile: '基本資料',
-        vip: '會員方案',
+        premium: '鑽石會員',
         wallet: '虛擬錢包',
 
         consumption: '消費紀錄',

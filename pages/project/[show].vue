@@ -3,7 +3,7 @@
         <BContainer>
             <BCard>
                 <BCardTitle class="clearfix">
-                    <NuxtLink :to="{ name: 'profile-show'}">
+                    <NuxtLink :to="{ name: 'profile'}">
                         <Icon name="ph:arrow-left" width="25" height="25" class="me-3"/>
                     </NuxtLink>
                     <span>{{ $t(`project.title.${project.sym}`) }}</span>
@@ -23,7 +23,7 @@
                     </template>
 
                     <div class="mt-5">
-                        <BPagination v-model="page.at" :perPage="page.size" :totalRows="page.total" @page-click="toPage" />
+                        <BPagination v-model="page.at" :per-page="page.per" :total-rows="page.total" @page-click="toPage" />
                     </div>
                 </BCardBody>
             </BCard>
@@ -33,9 +33,8 @@
 
 <script setup>
 
-    // make sure not to insert anything but the name of the component, which must be a string and not a variable.
     const component = {
-   //   'Market'        : resolveComponent('reservation/Market'),
+        'Market'        : resolveComponent('reservation/Market'),
         'Owljourney'    : resolveComponent('reservation/Owljourney'),
         'Experiences'   : resolveComponent('reservation/Experiences'),
     };
@@ -72,7 +71,7 @@
 
     $event('breadcrumb:updated', [{
         text: t('profile.title.show'),
-        to : router.resolve({name:'profile-show'}).path
+        to : router.resolve({name:'profile'}).path
     }, {
         text: t(`project.title.${project.sym}`),
     }]);
@@ -84,6 +83,7 @@
 
     let page = reactive({
         loading : false,
+        per     : 1,
         total   : 1,
         at      : 1,
         size    : 5,
@@ -96,14 +96,14 @@
 
     async function toPage(e, p) {
         page.loading = true;
-        
+
         let ret = await api.project.reservation(code.value, page.size, p);
-        
+
         if ( ret.data.status == false ) {
             page.loading = false;
             return;
         }
-        
+
         reservation   = ret.data.reservation;
         meta          = ret.data.meta;
 
@@ -111,9 +111,10 @@
 
         page.loading = false;
 
-        page.total = meta.pagination.total_pages;
-        page.at = meta.pagination.current_page;
+        page.per    = meta.pagination.per_page;
+        page.total  = meta.pagination.total;
+        page.at     = meta.pagination.current_page;
 
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
     }
 </script>

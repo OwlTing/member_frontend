@@ -13,7 +13,7 @@ body {padding-bottom:60px; background:#f8fafc; font-family:"Noto Sans TC", "Heit
     #layout-main .breadcrumbBox .breadcrumb .active {color:#3C4145}
     #layout-main .breadcrumbBox .breadcrumb-item + .breadcrumb-item::before {color:#a3abb2}
 
-    #layout-main .nav-link {padding:0}
+    #layout-main .nav-link {padding:0; transition:all .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out}
 
 #layout-main .mobileBox {display:none; position:fixed; z-index:999; width:100%; top:0; left:0; padding:16px; background:#fff !important; box-shadow:0px 5px 15px -5px rgba(37, 41, 44, 0.15)}
     #layout-main .mobileBox .navbar-brand {padding:0}
@@ -37,11 +37,12 @@ body {padding-bottom:60px; background:#f8fafc; font-family:"Noto Sans TC", "Heit
 
 #layout-main .nav .nav-item .nav-link {padding:16px 27px; border-left:4px solid transparent; font-size:16px}
 
-#layout-main .nav a.nav-link:link       {color:#3C4145}
-#layout-main .nav a.nav-link:visited    {color:#3C4145}
-#layout-main .nav a.nav-link:hover      {color:#999}
+#layout-main .nav a.nav-link:link       {color:#3C4145; fill:#3C4145}
+#layout-main .nav a.nav-link:visited    {color:#3C4145; fill:#3C4145}
+#layout-main .nav a.nav-link:hover      {color:#999; fill:#999}
 
-#layout-main .nav .nav-item .nav-link.active {border-left-color:#078abc; background:#f8fafc; color:#078abc}
+
+#layout-main .nav .nav-item .nav-link.active {border-left-color:#078abc; background:#f8fafc; color:#078abc; fill:#078abc}
 
 
 

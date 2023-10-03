@@ -8,6 +8,6 @@
         layout: 'plain',
     })
 
-    await navigateTo({name: 'profile-show'});
+    await navigateTo({name: 'profile'});
 
 </script>

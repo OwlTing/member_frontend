@@ -8,11 +8,11 @@
 
     import api from '~/api/api';
     const { t } = useI18n()
-    
+
     useHead({
         title: 'Loading...'
     })
-    
+
     definePageMeta({
         layout: "plain",
     });
@@ -31,13 +31,13 @@
     AuthStore.tokenSet(token, refresh);
 
     let ret = await api.sys.me();
-    
+
     let me = ret.data.me;
-    
+
     me.mobile = JSON.parse(me.mobile);
 
     AuthStore.user(me);
 
-    await navigateTo({name: 'profile-show'});
-    
+    await navigateTo({name: 'profile'});
+
 </script>

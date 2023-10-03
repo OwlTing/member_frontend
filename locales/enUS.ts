@@ -58,7 +58,7 @@ let lang = {
 
     sidebar: {
         profile: 'Profile',
-        vip: 'Vip Plan',
+        premium: 'Premium Member',
         consumption: 'Consumption',
         wallet: 'Crypto Wallet',
     },

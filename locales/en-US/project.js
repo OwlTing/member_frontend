@@ -1,7 +1,8 @@
 export default {
 
     title : {
-        Experiences: 'OwlTing Experiences',
-        Owljourney : 'OwlJourney',
+        Market      : 'OwlTing Market',
+        Experiences : 'OwlTing Experiences',
+        Owljourney  : 'OwlJourney',
     }
 }

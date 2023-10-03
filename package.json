@@ -13,7 +13,7 @@
     "@nuxt/devtools": "latest",
     "bootstrap-vue-next": "^0.12.3",
     "dayjs-nuxt": "^1.1.2",
-    "nuxt": "^3.7.1",
+    "nuxt": "^3.7.4",
     "sass": "^1.66.1"
   },
   "dependencies": {

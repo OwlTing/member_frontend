@@ -2,7 +2,7 @@
     <b-container>
         <b-card>
             <b-card-title class="clearfix">
-                <router-link :to="{ name: 'profile-show'}"><i class="owl-arrow-left"></i></router-link> {{ $t('profile.title.provider') }}
+                <router-link :to="{ name: 'profile'}"><i class="owl-arrow-left"></i></router-link> {{ $t('profile.title.provider') }}
             </b-card-title>
 
             <div v-for="(item, idx) in provider" class="itemBox">
@@ -128,7 +128,7 @@ export default {
 
             this.$emit('breadcrumbLoading', [ {
                 text: this.$t('profile.title.show'),
-                to : {name : 'profile-show'}
+                to : {name : 'profile'}
             }, {
                 text: this.$t('profile.title.provider'),
             }]);

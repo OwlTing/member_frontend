@@ -3,7 +3,7 @@
         <transition name="fade" mode="out-in">
             <BCard v-if="step.password">
                 <BCardTitle class="clearfix">
-                    <NuxtLink :to="{ name: 'profile-show'}">
+                    <NuxtLink :to="{ name: 'profile'}">
                         <Icon name="ph:arrow-left" width="25" height="25" class="me-3"/>
                     </NuxtLink>
                     <span>{{ $t('profile.title.passwordConfirm') }}</span>
@@ -21,7 +21,7 @@
                             <div class="mt-3">
                                 <BForm @submit="onPasswordSubmit" @submit.stop.prevent>
                                     <BFormGroup :label="$t('profile.password')" required>
-                                        <BFormInput type="password" v-model="form.password" autofocus required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('password')) }"></BFormInput>
+                                        <BFormInput type="password" v-model="form.password" :autofocus="true" required autocomplete="off" v-bind:class="{'is-invalid' : (formerrs.hasOwnProperty('password')) }"></BFormInput>
                                         <BFormInvalidFeedback :force-show="true" :key="inpKey">
                                              <template v-if="formerrs.hasOwnProperty('password')">{{ formerrs.password.join(', ') }}</template>
                                         </BFormInvalidFeedback>
@@ -39,7 +39,7 @@
 
             <BCard v-else>
                 <BCardTitle class="clearfix">
-                    <NuxtLink :to="{ name: 'profile-show'}">
+                    <NuxtLink :to="{ name: 'profile'}">
                         <Icon name="ph:arrow-left" width="25" height="25" class="me-3"/>
                     </NuxtLink>
                     <span>{{ $t('profile.title.mobile') }}</span>
@@ -104,7 +104,7 @@
             </p>
 
             <div class="mt-4 text-end">
-                <BButton style="width:100%" variant="primary" :to="{name: 'profile-show'}">{{ $t('m.ok') }}</BButton>
+                <BButton style="width:100%" variant="primary" :to="{name: 'profile'}">{{ $t('m.ok') }}</BButton>
             </div>
         </BModal>
 
@@ -117,7 +117,7 @@
             </p>
 
             <div class="mt-4 text-end">
-                <BButton style="width:100%" variant="primary" :to="{name: 'profile-show'}">{{ $t('m.ok') }}</BButton>
+                <BButton style="width:100%" variant="primary" :to="{name: 'profile'}">{{ $t('m.ok') }}</BButton>
             </div>
         </BModal>
     </BContainer>
@@ -179,7 +179,7 @@
 
     $event('breadcrumb:updated', [{
         text: t('profile.title.show'),
-        to : router.resolve({name:'profile-show'}).path
+        to : router.resolve({name:'profile'}).path
     }, {
         text: t('profile.title.mobile'),
     }]);

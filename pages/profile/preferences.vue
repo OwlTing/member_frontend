@@ -2,7 +2,7 @@
     <BContainer>
         <BCard>
             <BCardTitle class="clearfix">
-                <NuxtLink :to="{ name: 'profile-show'}">
+                <NuxtLink :to="{ name: 'profile'}">
                     <Icon name="ph:arrow-left" width="25" height="25" class="me-3"/>
                 </NuxtLink>
                 <span>{{ $t('profile.title.preferences') }}</span>
@@ -16,9 +16,9 @@
                             <BFormGroup :label="$t('profile.language')" class="mt-5" required>
                                 <BFormSelect v-model="form.lang" :options=" [
                                     { text: $t('m.selectPlease'),               value: null, disabled: true },
+                                    { text: $t('profile.languageHint.zh-TW'),   value: 'zh-TW'  },
                                     { text: $t('profile.languageHint.en'),      value: 'en'     },
                                     { text: $t('profile.languageHint.ja'),      value: 'ja'     },
-                                    { text: $t('profile.languageHint.zh-TW'),   value: 'zh-TW'  }
                                 ]" required>
                                 </BFormSelect>
                             </BFormGroup>
@@ -70,7 +70,7 @@
 
     $event('breadcrumb:updated', [{
         text: t('profile.title.show'),
-        to : router.resolve({name:'profile-show'}).path
+        to : router.resolve({name:'profile'}).path
     }, {
         text: t('profile.title.preferences')
     }]);
@@ -110,7 +110,7 @@
 
         AuthStore.update(ret.data.user);
 
-        await navigateTo({ name: 'profile-show' });
+        await navigateTo({ name: 'profile' });
     }
 
 </script>
