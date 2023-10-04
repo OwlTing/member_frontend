@@ -11,7 +11,8 @@ export default {
         mobile : '携帯電話の連動',
         provider : '外部帳號連結',
         preferences : 'その他',
-        twoFactor : '兩階段驗證'
+        twoFactor : '兩階段驗證',
+        premium : '会員プラン',
     },
 
     avatar : 'アバター',
@@ -116,4 +117,24 @@ export default {
             hint: 'Google 身分驗證器',
         }
     },
+
+    premium : {
+        title : 'プレミアム会員 - {type}',
+        info : "<div style='font-size:1.3rem; color:#25819e; font-weight:bold'>プレミアム会員にアップグレードする</div>\
+        <div style='margin-top:12px; font-size:1.3rem'>旅行予約、安全な食材が 10% オフ、さらに無制限の送料無料</div>\
+        <div style='margin-top:12px; font-size:0.9rem; color:#666'>いつでもキャンセル、お悩みなし！月額 $249、年間支払いがさらにお得！</div>",
+
+        period : 'プラン特典期間',
+        redirect : 'プレミアム情報を取得します',
+
+        type : {
+            OPY : '年払い',
+            OPM : '月払い',
+            OPV : '期限切れ',
+
+            OPFY : '無料',
+            OPFM : '無料',
+        }
+
+    }
 }

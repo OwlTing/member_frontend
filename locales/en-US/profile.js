@@ -11,7 +11,9 @@ export default {
         mobile : 'Binding Mobile',
         provider : 'Social Media Connection',
         preferences : 'Preferences',
-        twoFactor : 'Two Factor Validation'
+        twoFactor : 'Two Factor Validation',
+        premium : 'Member Plan',
+
     },
 
     avatar : 'Avatar',
@@ -116,4 +118,25 @@ export default {
             hint: 'Google Authenticator'
         }
     },
+    premium : {
+
+        title : 'Premium Diamond Membership - {type}',
+        info : "<div style='font-size:1.3rem; color:#25819e; font-weight:bold'>Upgrade to Premium Diamond Membership</div>\
+        <div style='margin-top:12px; font-size:1.3rem'>Travel Bookings, Safe Ingredients at 10% Off, Plus Unlimited Free Shipping</div>\
+        <div style='margin-top:12px; font-size:0.9rem; color:#666'>Cancel Anytime, No Worries! $249 per Month, Even Better with Annual Payment!</div>",
+
+        period : 'Promotional Period',
+        redirect : 'Click Here to Get More Premium Information',
+
+        type : {
+            OPY : 'Annual Payment',
+            OPM : 'Monthly Payment',
+            OPV : 'Expired',
+
+            OPFY : 'Free',
+            OPFM : 'Free',
+        }
+
+
+    }
 }

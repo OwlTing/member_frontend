@@ -1,13 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     ssr: false,
-    
+
     devtools: { enabled: true },
-    
+
     build: {
         transpile: ['@vuepic/vue-datepicker']
     },
-    
+
     runtimeConfig: {
         public: {
             authRedirect: process.env.NUXT_AUTH_REDIRECT,
@@ -25,7 +25,7 @@ export default defineNuxtConfig({
 
         head: {
             title : 'OwlTing Member',
-            
+
             viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
             charset: 'utf-8',
 
@@ -41,9 +41,8 @@ export default defineNuxtConfig({
         'nuxt-icon',
         'dayjs-nuxt'
     ],
-    
+
     plugins: [
-      { src: '/plugins/router-nprogress.ts', mode: 'client'}
     ],
 
     bootstrapVueNext: {
@@ -64,5 +63,5 @@ export default defineNuxtConfig({
         global: true,
         dirs: ['~/components']
     },
-    
+
 })

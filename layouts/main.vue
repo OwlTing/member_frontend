@@ -27,7 +27,7 @@
                         <span>{{ $t('sidebar.profile') }}</span>
                     </div>
                 </BNavItem>
-<!--
+
                 <BNavItem :to="{ name: 'premium'}" @click="show = false" :active="($route.name == 'premium') ? true : false">
                     <div class="clearfix">
                         <div class="float-start me-4">
@@ -39,7 +39,7 @@
                         <span>{{ $t('sidebar.premium') }}</span>
                     </div>
                 </BNavItem>
--->
+
                 <BNavItem class="logoutBox">
                     <BButton variant="link" @click="logout" class="p-0">{{ $t('m.logout') }}</BButton>
                 </BNavItem>

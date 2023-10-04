@@ -2,7 +2,7 @@ export default {
     title : {
         show : '個人資料',
         edit : '編輯個人資料',
-        
+
         security : '帳戶安全',
             password : '變更密碼',
 
@@ -117,6 +117,24 @@ export default {
             hint: 'Google 身分驗證器',
         }
     },
-    
-    
+
+
+    premium : {
+        title : 'Premium 鑽石會員 - {type}',
+        info : "<div style='font-size:1.3rem; color:#25819e; font-weight:bold'>升級成 Premium 鑽石會員</div>\
+        <div style='margin-top:12px; font-size:1.3rem'>旅遊訂房、安心食材 9 折起，再享不限次數免運</div>\
+        <div style='margin-top:12px; font-size:0.9rem; color:#666'>隨時取消免煩惱！月繳 $249，年繳更優惠！</div>",
+
+        period : '方案優惠期間',
+        redirect : '按此取得更多 Premium 資訊',
+
+        type : {
+            OPY : '年繳',
+            OPM : '月繳',
+            OPV : '已過期',
+
+            OPFY : '免費',
+            OPFM : '免費',
+        }
+    }
 }
