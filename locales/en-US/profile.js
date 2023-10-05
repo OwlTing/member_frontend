@@ -13,6 +13,7 @@ export default {
         preferences : 'Preferences',
         twoFactor : 'Two Factor Validation',
         premium : 'Member Plan',
+        address : 'Wallet Address',
 
     },
 
@@ -118,6 +119,12 @@ export default {
             hint: 'Google Authenticator'
         }
     },
+    
+    address : {
+        address : 'My Wallet Address',
+        note    : 'Remark'
+    },
+    
     premium : {
 
         title : 'Premium Diamond Membership - {type}',

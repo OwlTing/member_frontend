@@ -59,10 +59,11 @@ let lang = {
     sidebar: {
         profile: 'Profile',
         premium: 'Premium Member',
+        address: 'Crypto Wallet',
+
         consumption: 'Consumption',
-        wallet: 'Crypto Wallet',
     },
-    
+
     project     : {...project},
     profile     : {...profile},
     reservation : {...reservation},

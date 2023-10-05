@@ -59,7 +59,7 @@ let lang = {
     sidebar: {
         profile: '基本資料',
         premium: '鑽石會員',
-        wallet: '虛擬錢包',
+        address: '虛擬錢包',
 
         consumption: '消費紀錄',
     },

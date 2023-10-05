@@ -40,6 +40,18 @@
                     </div>
                 </BNavItem>
 
+                <BNavItem :to="{ name: 'address'}" @click="show = false" :active="($route.name == 'address') ? true : false">
+                    <div class="clearfix">
+                        <div class="float-start me-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24">
+                                <rect fill="none" x="0" y="0" width="24" height="24" />
+                                <g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 20H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2Z"/><path fill="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M16.5 14a.5.5 0 1 1 0-1a.5.5 0 0 1 0 1Z"/><path d="M18 7V5.603a2 2 0 0 0-2.515-1.932l-11 2.933A2 2 0 0 0 3 8.537V9"/></g>
+                            </svg>
+                        </div>
+                        <span>{{ $t('sidebar.address') }}</span>
+                    </div>
+                </BNavItem>
+
                 <BNavItem class="logoutBox">
                     <BButton variant="link" @click="logout" class="p-0">{{ $t('m.logout') }}</BButton>
                 </BNavItem>

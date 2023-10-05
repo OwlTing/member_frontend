@@ -59,8 +59,10 @@ let lang = {
     sidebar: {
         profile: '基本情報',
         premium: 'プレミア会員',
+        address: '暗号ウォレット',
 
         consumption: '消費履歴',
+
     },
 
     project     : {...project},

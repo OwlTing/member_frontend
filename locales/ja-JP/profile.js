@@ -9,10 +9,11 @@ export default {
         passwordConfirm : 'パスワード確認',
 
         mobile : '携帯電話の連動',
-        provider : '外部帳號連結',
         preferences : 'その他',
+        provider : '外部帳號連結',
         twoFactor : '兩階段驗證',
         premium : '会員プラン',
+        address : 'ウォレットアドレス',
     },
 
     avatar : 'アバター',
@@ -118,6 +119,11 @@ export default {
         }
     },
 
+    address : {
+        address : 'ウォレットアドレス',
+        note    : '備考'
+    },
+    
     premium : {
         title : 'プレミアム会員 - {type}',
         info : "<div style='font-size:1.3rem; color:#25819e; font-weight:bold'>プレミアム会員にアップグレードする</div>\

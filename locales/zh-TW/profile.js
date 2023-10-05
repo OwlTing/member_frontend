@@ -13,6 +13,7 @@ export default {
         preferences : '偏好設定',
         twoFactor : '兩階段驗證',
         premium : '會員方案',
+        address : '錢包地址',
     },
 
     avatar : '大頭貼',
@@ -116,6 +117,11 @@ export default {
             title: 'Google 身分驗證器',
             hint: 'Google 身分驗證器',
         }
+    },
+
+    address : {
+        address : '我的錢包地址',
+        note    : '備註'
     },
 
 
