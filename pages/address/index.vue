@@ -28,13 +28,52 @@
                     </BForm>
                 </div>
                 <div v-else>
-                    <dl>
-                        <dt>{{ $t('profile.address.address') }}</dt>
-                        <dd>
-                            <div class="font-monospace ps-2">{{ form.address }}</div>
+                    <div>
+                        <div class="d-flex justify-content-between">
+                            {{ $t('profile.address.address') }}
+                            <b-form-checkbox switch v-model="updatedSwitch" :disabled="isLoadingBalance" class="ms-3">{{  $t('profile.address.update')  }}</b-form-checkbox>
+                        </div>
+                        <div class="mt-2">
+                            <div v-if="!updatedSwitch" class="font-monospace ps-2 text-break">{{ form.address }}</div>
+                            <div v-else>
+                                <BFormInput type="string" v-model="form.address" :autofocus="true"  autocomplete="off" :state="updateInputState"></BFormInput>
+                                <b-form-invalid-feedback id="input-live-feedback" v-if="updateInputState === false">
+                                    invalid address
+                                </b-form-invalid-feedback>
+                                <BButton type="submit" size="sm" variant="primary" :disabled="isLoadingBalance" class="mt-2" @click="onAddressSubmit">{{ $t('m.ok') }}</BButton>
+                            </div>
+
                             <div class="mt-2 ps-2">{{ form.note }}</div>
-                        </dd>
-                    </dl>
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <div class="d-flex flex-row-reverse">
+                            <b-button type="submit" size="sm" variant="primary" :disabled="isLoadingBalance" @click="getBalance">
+                                <Icon name="fa:refresh" class="me-1 pb-1 text-white" width="14"/>{{  $t('profile.address.refresh')  }}
+                            </b-button>
+                        </div>
+                        <BTable
+                            :items="!isLoadingBalance ? table_items : []"
+                            :fields="table_fields"
+                            responsive
+                            :busy="isLoadingBalance"
+                            bordered
+                            class="mt-1"
+                        >
+                            <template #table-busy>
+                                <div class="text-center text-danger my-4">
+                                    <b-spinner class="align-middle"></b-spinner>
+                                    <strong>Loading...</strong>
+                                </div>
+                            </template>
+                            <template #cell(chain)="data">
+                                <div class="d-flex align-items-center">
+                                    <b-img :src="`/imgs/network/${data.value}.png`" width="20px" height="20px" class="me-1" />
+                                    <span>{{ data.value }}</span>
+                                </div>
+                            </template>
+                        </BTable>
+                    </div>
                 </div>
             </div>
         </BCard>
@@ -77,6 +116,12 @@
 
     async function onAddressSubmit(){
 
+        const addressRegex = /^0x[a-fA-F0-9]{40}$/g
+        if (!addressRegex.test(form.address)) {
+            updateInputState.value = false
+            return false
+        }
+
         form.loading = true;
 
         let ret = ( form.created )
@@ -91,11 +136,41 @@
 
             return;
         }
-console.log(ret);
+
         form.created = true;
 
         form.address = ret.data.address.address;
         form.note    = ret.data.address.note;
+        updatedSwitch.value = false
+        updateInputState.value = null
+        getBalance()
     }
+    
+    const authStore = useAuthStore()
+    const { totalBalance } = useChainBalance()
+    const isLoadingBalance = ref(false)
+    const updatedSwitch = ref(false)
+    const updateInputState = ref(null)
+    const table_fields = ref([
+        { key: 'chain', label: 'Chain' },
+        { key: 'crypto', label: 'Crypto' },
+        { key: 'USDC', label: 'USDC'}
+    ])
+    const table_items = computed(() => {
+        return authStore.getChainData
+    })
+
+    const getBalance = async () => {
+        isLoadingBalance.value = true
+        await totalBalance(form.address)
+        isLoadingBalance.value = false
+    }
+
+    onMounted(async () => {
+        if (form.address) {
+            getBalance()
+        }
+    })
+
 
 </script>

@@ -65,6 +65,14 @@
                     </BNavItem>
                 </BNav>
             </div>
+            <div class="mt-3">
+                <div class="small px-4 my-2">{{ $t('sidebar.walletpro') }}</div>
+                <BNav vertical>
+                    <BNavItem :to="{ name: 'project-walletPro' }">
+                        Wallet Pro
+                    </BNavItem>
+                </BNav>
+            </div>
         </div>
 
         <div class="mainBox">

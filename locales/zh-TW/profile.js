@@ -121,7 +121,9 @@ export default {
 
     address : {
         address : '我的錢包地址',
-        note    : '備註'
+        note    : '備註',
+        refresh: '更新資產',
+        update: '更新地址'
     },
 
 
