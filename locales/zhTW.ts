@@ -62,6 +62,7 @@ let lang = {
         address: '虛擬錢包',
 
         consumption: '消費紀錄',
+        walletpro: '奧丁丁錢包'
     },
 
     project     : {...project},

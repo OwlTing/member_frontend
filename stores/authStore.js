@@ -28,7 +28,8 @@ export const useAuthStore = defineStore('authStore', {
         token: {
             access  : null,
             refresh : null,
-        }
+        },
+        chain: []
     }),
 
     persist: true,
@@ -79,6 +80,14 @@ export const useAuthStore = defineStore('authStore', {
 
             if ( data.hasOwnProperty('mobile') )
                 this.profile.mobile = data.mobile;
+        },
+        setBalance(payload) {
+            this.chain = payload
         }
     },
+    getters: {
+        getChainData: state => {
+            return state.chain
+        }
+    }
 });
