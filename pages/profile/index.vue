@@ -88,7 +88,7 @@
                             </div>
 
                             <div>{{ $t('profile.mobile') }} :
-                                <template v-if="AuthStore.profile.mobile.number">({{ AuthStore.profile.mobile.code }}) {{ AuthStore.profile.mobile.number }}</template>
+                                <template v-if="AuthStore.profile.mobile.number">({{ AuthStore.profile.mobile.code }}) {{ AuthStore.profile.mobile.number.replace(AuthStore.profile.mobile.number.substring(2, 6), "*****") }}</template>
                                 <template v-else>-</template>
                             </div>
                        </NuxtLink>
