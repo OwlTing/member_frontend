@@ -57,7 +57,7 @@ export default defineNuxtConfig({
         composables: true, // Will include all composables
     },
     pinia: {
-        autoImports: ['authStore']
+        autoImports: ['authStore', 'commonStore']
     },
 
     imports: {
