@@ -68,7 +68,7 @@
                             </template>
                             <template #cell(chain)="data">
                                 <div class="d-flex align-items-center">
-                                    <b-img :src="`/imgs/network/${data.value}.png`" width="20px" height="20px" class="me-1" />
+                                    <b-img :src="`/imgs/network/${data.value.toLowerCase()}.png`" width="20px" height="20px" class="me-1" />
                                     <span>{{ data.value }}</span>
                                 </div>
                             </template>
