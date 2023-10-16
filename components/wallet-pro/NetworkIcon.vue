@@ -6,14 +6,14 @@
 </template>
 
 <script setup>
-import arbitrum from '/imgs/network/arbitrum.png'
-import avalanche from '/imgs/network/avalanche.png'
-import binance from '/imgs/network/binance.png'
-import bitcoin from '/imgs/network/bitcoin.png'
-import ethereum from '/imgs/network/ethereum.png'
-import polygon from '/imgs/network/polygon.png'
-import stellar from '/imgs/network/stellar.png'
-import tron from '/imgs/network/tron.png'
+const arbitrum = './imgs/network/arbitrum.png'
+const avalanche = './imgs/network/avalanche.png'
+const binance = './imgs/network/binance.png'
+const bitcoin = './imgs/network/bitcoin.png'
+const ethereum = './imgs/network/ethereum.png'
+const polygon = './imgs/network/polygon.png'
+const stellar = './imgs/network/stellar.png'
+const tron = './imgs/network/tron.png'
 
 const NETWORK_ICON = {
   arbitrum,
